@@ -2,7 +2,7 @@ class Avaliacao {
   final String id;
   final String usuario;
   final String nota;
-  final String comentario;
+  final String? comentario;
 
   Avaliacao({
     required this.id,

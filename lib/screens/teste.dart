@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:und1_mobile/styles.dart';
 
 class Teste extends StatefulWidget {
   const Teste({super.key});
@@ -10,14 +11,15 @@ class Teste extends StatefulWidget {
 class _TesteState extends State<Teste> {
   @override
   Widget build(BuildContext context) {
+    var cores = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Filme"),
       ),
       body: Text(
-        "Hello World!",
-        style: TextStyle(
-          color: Theme.of(context).primaryColor,
+        "Hello World! /n Whereas disregard and contempt for human rights have resulted",
+        style: estiloTitulo2.copyWith(
+          color: cores.onPrimary,
         ),
       ),
     );
