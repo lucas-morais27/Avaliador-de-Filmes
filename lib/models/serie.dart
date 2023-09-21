@@ -5,20 +5,20 @@ class Serie {
   final String titulo;
   final String sinopse;
   final String diretor;
-  // final String posterUrl;
+  final String posterUrl;
   final String anoLancamento;
-  final int numeroEpisodios;
-  final int numeroTemporadas;
+  final String numeroEpisodios;
+  final String numeroTemporadas;
   // final int numeroGostei;
   // final int numeroNaoGostei;
-  final List<Avaliacao> avaliacoes;
+  final List<Avaliacao>? avaliacoes;
 
   Serie({
     required this.id,
     required this.titulo,
     required this.sinopse,
     required this.diretor,
-    // required this.posterUrl,
+    required this.posterUrl,
     required this.anoLancamento,
     required this.numeroEpisodios,
     required this.numeroTemporadas,

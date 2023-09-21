@@ -1,6 +1,6 @@
 import '../models/filme.dart';
 
-Filme mock1 = Filme(
+Filme mockFilme1 = Filme(
     id: "1",
     titulo: "Gran Turismo – De Jogador a Corredor",
     sinopse:
@@ -8,4 +8,4 @@ Filme mock1 = Filme(
     diretor: "Neill Blomkamp",
     anoLancamento: "2023",
     avaliacoes: null,
-    posterUrl: 'filme.jpg');
+    posterUrl: 'assets/filme.jpg');
