@@ -7,7 +7,7 @@ class Filme {
   final String diretor;
   final String posterUrl;
   final String anoLancamento;
-  final List<Avaliacao>? avaliacoes;
+  List<Avaliacao>? avaliacoes;
 
   Filme({
     required this.id,
