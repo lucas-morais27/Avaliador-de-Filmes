@@ -11,7 +11,7 @@ class Serie {
   final String numeroTemporadas;
   // final int numeroGostei;
   // final int numeroNaoGostei;
-  final List<Avaliacao>? avaliacoes;
+  List<Avaliacao>? avaliacoes;
 
   Serie({
     required this.id,
