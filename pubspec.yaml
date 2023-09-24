@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.0.0
+  swipeable_card_stack: ^0.0.5
+  swipe: ^0.0.1
 
 dev_dependencies:
   flutter_test:

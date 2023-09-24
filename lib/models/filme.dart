@@ -1,21 +1,16 @@
+import 'producao.dart';
 import 'avaliacao.dart';
 
-class Filme {
-  final String id;
-  final String titulo;
-  final String sinopse;
+class Filme extends Producao {
   final String diretor;
-  final String posterUrl;
-  final String anoLancamento;
-  List<Avaliacao>? avaliacoes;
 
   Filme({
-    required this.id,
-    required this.titulo,
-    required this.sinopse,
+    required String id,
+    required String titulo,
+    required String sinopse,
+    required String posterUrl,
+    required String anoLancamento,
+    required List<Avaliacao>? avaliacoes,
     required this.diretor,
-    required this.posterUrl,
-    required this.anoLancamento,
-    required this.avaliacoes,
-  });
+  }) : super(id, titulo, sinopse, posterUrl, anoLancamento, avaliacoes);
 }
