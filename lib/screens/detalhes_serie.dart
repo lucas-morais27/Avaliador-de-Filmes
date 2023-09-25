@@ -62,7 +62,7 @@ class DetalhesSerie extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image(
-                      image: AssetImage(serie.posterUrl),
+                      image: Image.network(serie.posterUrl).image,
                       height: 270,
                       fit: BoxFit.cover,
                       // width: double.infinity,
@@ -150,6 +150,7 @@ class DetalhesSerie extends StatelessWidget {
                 fontSize: 16,
                 color: cores.onSecondary,
               ),
+              textAlign: TextAlign.justify,
             ),
             const SizedBox(
               height: 24,

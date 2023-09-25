@@ -62,7 +62,7 @@ class DetalhesFilme extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image(
-                      image: AssetImage(filme.posterUrl),
+                      image: Image.network(filme.posterUrl).image,
                       height: 270,
                       fit: BoxFit.cover,
                       // width: double.infinity,
@@ -132,6 +132,7 @@ class DetalhesFilme extends StatelessWidget {
                 fontSize: 16,
                 color: cores.onSecondary,
               ),
+              textAlign: TextAlign.justify,
             ),
             const SizedBox(
               height: 24,

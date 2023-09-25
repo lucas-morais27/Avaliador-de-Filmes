@@ -1,27 +1,22 @@
+import 'producao.dart';
 import 'avaliacao.dart';
 
-class Serie {
-  final String id;
-  final String titulo;
-  final String sinopse;
-  final String diretor;
-  final String posterUrl;
-  final String anoLancamento;
+class Serie extends Producao{
+  final String criador;
   final String numeroEpisodios;
   final String numeroTemporadas;
   // final int numeroGostei;
   // final int numeroNaoGostei;
-  List<Avaliacao>? avaliacoes;
 
   Serie({
-    required this.id,
-    required this.titulo,
-    required this.sinopse,
-    required this.diretor,
-    required this.posterUrl,
-    required this.anoLancamento,
+    required String id,
+    required String titulo,
+    required String sinopse,
+    required String posterUrl,
+    required String anoLancamento,
+    required List<Avaliacao>? avaliacoes,
     required this.numeroEpisodios,
     required this.numeroTemporadas,
-    required this.avaliacoes,
-  });
+    required this.criador
+  }) : super(id, titulo, sinopse, posterUrl, anoLancamento, avaliacoes);
 }
