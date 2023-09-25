@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'botao_padrao.dart';
+
 class ModalConfirmacao extends StatelessWidget {
   final String title;
   final String content;
@@ -20,23 +22,20 @@ class ModalConfirmacao extends StatelessWidget {
       title: Text(title),
       content: Text(content),
       actions: <Widget>[
-        ElevatedButton(
+        BotaoPadrao(
           onPressed: () {
             onConfirmed(true); // Chama a função de confirmação com true
             Navigator.of(context).pop();
           },
-          child: const Text('Sim'),
+          texto: 'Sim',
         ),
-        ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all<Color>(cores.onSecondary),
-          ),
+        BotaoPadrao(
+          cor: cores.secondary,
           onPressed: () {
             onConfirmed(false); // Chama a função de confirmação com false
             Navigator.of(context).pop();
           },
-          child: const Text('Cancelar'),
+          texto: 'Não',
         ),
       ],
     );
