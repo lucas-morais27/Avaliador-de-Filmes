@@ -65,11 +65,14 @@ class _PaginaInicialState extends State<PaginaInicial> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-            child: Text(
-          _titulosDaPagina[_selectedIndex],
-          style: estiloSubTitulo1,
-        )),
+        title: const Row(
+          children: [
+            Text(
+              'RevIls',
+              style: estiloSubTitulo1,
+            ),
+          ],
+        ),
       ),
       body: Container(
         child: _screens.elementAt(_selectedIndex),

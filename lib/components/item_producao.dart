@@ -70,35 +70,56 @@ class _ItemProducaoState extends State<ItemProducao> {
               );
             }
           },
-          child: Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: cores.secondary, width: 0.75))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Flexible(
-                      flex: 3,
-                      child: Image.network(
-                        widget.producao.posterUrl,
-                        fit: BoxFit.fill,
-                      )),
-                  const Expanded(child: SizedBox()),
-                  Flexible(
-                    flex: 8,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.producao.titulo, style: estiloSubTitulo3),
-                        Text(
-                            "Ano de lançamento: ${widget.producao.anoLancamento}",
-                            style: estiloCorpoTexto3),
-                      ],
-                    ),
-                  ),
-                ],
-              )),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Card(
+              shape: BeveledRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              color: cores.onBackground,
+              child: Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom:
+                              BorderSide(color: cores.secondary, width: 0.75))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Flexible(
+                            flex: 3,
+                            child: Image.network(
+                              widget.producao.posterUrl,
+                              fit: BoxFit.fill,
+                              height: 120,
+                            )),
+                      ),
+                      const Expanded(child: SizedBox()),
+                      Flexible(
+                        flex: 8,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.producao.titulo,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                            Text(
+                              "Ano de lançamento: ${widget.producao.anoLancamento}",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          ),
         ));
   }
 }
