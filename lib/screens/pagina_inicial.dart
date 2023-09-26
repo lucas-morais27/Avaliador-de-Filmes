@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:und1_mobile/components/card_producao.dart';
-import 'package:und1_mobile/components/cards_de_producoes.dart';
-import 'package:und1_mobile/mocks/mock_filme.dart';
-import 'package:und1_mobile/models/Producao.dart';
+import 'package:und1_mobile/components/lista_producao.dart';
+import 'package:und1_mobile/screens/pagina_filmes_nao_avaliados.dart';
 import 'package:und1_mobile/styles.dart';
 
-import '../mocks/mock_serie.dart';
-import 'detalhes_filme.dart';
+import 'pagina_curtidos.dart';
+import 'pagina_nao_curtidos.dart';
 
 class PaginaInicial extends StatefulWidget {
   final List<dynamic> producoes;
+  final List<dynamic> producoesCurtidas;
+  final List<dynamic> producoesNaoCurtidas;
   final Function(int) gostei;
   final Function(int) naoGostei;
-  const PaginaInicial(this.gostei, this.naoGostei, {super.key, required this.producoes});
+  final Function(int) removerCurtido;
+  final Function(int) removerNaoCurtido;
+  const PaginaInicial(
+      this.gostei, this.naoGostei, this.removerCurtido, this.removerNaoCurtido,
+      {super.key,
+      required this.producoes,
+      required this.producoesCurtidas,
+      required this.producoesNaoCurtidas});
 
   @override
-  State<PaginaInicial> createState() =>
-      _PaginaInicialState();
+  State<PaginaInicial> createState() => _PaginaInicialState();
 }
 
 class _PaginaInicialState extends State<PaginaInicial> {
@@ -38,17 +44,12 @@ class _PaginaInicialState extends State<PaginaInicial> {
   void initState() {
     super.initState();
     _screens = [
-      const Text(
-        'Index 0: Não Gostei',
-        style: optionStyle,
-      ),
-      /*const Text(
-        'Index 1: Não avaliados',
-        style: optionStyle,
-      ),*/
-      CardsDeProducoes(widget.gostei, widget.naoGostei, producoes: widget.producoes),
-      //CardsDeProducoes(widget.gostei, widget.naoGostei, widget.pular, producoes: widget.producoes),
-      const Text('Index 2: Gostei', style: optionStyle,)
+      PaginaNaoCurtidos(widget.removerNaoCurtido,
+          producoes: widget.producoesNaoCurtidas),
+      PaginaFilmesNaoAvaliados(widget.gostei, widget.naoGostei,
+          producoes: widget.producoes),
+      PaginaCurtidos(widget.removerCurtido,
+          producoes: widget.producoesCurtidas),
     ];
   }
 
@@ -64,9 +65,13 @@ class _PaginaInicialState extends State<PaginaInicial> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(_titulosDaPagina[_selectedIndex], style: estiloSubTitulo1,)),
+        title: Center(
+            child: Text(
+          _titulosDaPagina[_selectedIndex],
+          style: estiloSubTitulo1,
+        )),
       ),
-      body: Center(
+      body: Container(
         child: _screens.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(

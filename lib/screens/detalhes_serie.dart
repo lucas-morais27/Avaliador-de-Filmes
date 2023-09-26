@@ -4,12 +4,9 @@ import '../models/avaliacao.dart';
 import '../models/serie.dart';
 
 class DetalhesSerie extends StatelessWidget {
-  final Serie serie;
-
-  const DetalhesSerie({super.key, required this.serie});
-
   @override
   Widget build(BuildContext context) {
+    var serie = ModalRoute.of(context)?.settings.arguments as Serie;
     final ColorScheme cores = Theme.of(context).colorScheme;
 
     List<Avaliacao> listaAvaliacoes = [
@@ -33,7 +30,6 @@ class DetalhesSerie extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 child: Container(
                   padding: const EdgeInsets.all(8),
-                  color: cores.secondary,
                   child: Text(
                     serie.titulo,
                     style: TextStyle(
@@ -51,83 +47,85 @@ class DetalhesSerie extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: Colors.white30, // Cor da borda
-                      width: 2.0, // Largura da borda
-                    ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image(
-                      image: Image.network(serie.posterUrl).image,
-                      height: 270,
-                      fit: BoxFit.cover,
-                      // width: double.infinity,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      serie.anoLancamento,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: cores.onSecondary,
+                Flexible(
+                    flex: 2,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: Colors.white30, // Cor da borda
+                          width: 2.0, // Largura da borda
+                        ),
                       ),
-                    ),
-                    Text(
-                      "Lançamento ",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: cores.onSecondary,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image(
+                          image: Image.network(serie.posterUrl).image,
+                          //height: 270,
+                          fit: BoxFit.fill,
+                          // width: double.infinity,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    Text(
-                      serie.numeroTemporadas,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: cores.onSecondary,
-                      ),
-                    ),
-                    Text(
-                      "Temporadas ",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: cores.onSecondary,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    Text(
-                      serie.numeroEpisodios,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: cores.onSecondary,
-                      ),
-                    ),
-                    Text(
-                      "Episódios ",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: cores.onSecondary,
-                      ),
-                    ),
-                  ],
-                )
+                    )),
+                const Expanded(child: SizedBox()),
+                Flexible(
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          serie.anoLancamento,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: cores.onSecondary,
+                          ),
+                        ),
+                        Text(
+                          "Lançamento ",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: cores.onSecondary,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        Text(
+                          serie.numeroTemporadas,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: cores.onSecondary,
+                          ),
+                        ),
+                        Text(
+                          "Temporadas ",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: cores.onSecondary,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        Text(
+                          serie.numeroEpisodios,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: cores.onSecondary,
+                          ),
+                        ),
+                        Text(
+                          "Episódios ",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: cores.onSecondary,
+                          ),
+                        ),
+                      ],
+                    ))
               ],
             ),
             const SizedBox(

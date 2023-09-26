@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:und1_mobile/models/producao.dart';
 import 'package:und1_mobile/screens/detalhes_filme.dart';
 import 'package:und1_mobile/screens/detalhes_serie.dart';
 import 'package:und1_mobile/screens/pagina_inicial.dart';
@@ -8,8 +9,6 @@ import 'package:und1_mobile/utils/app_routes.dart';
 
 import 'mocks/mock_filme.dart';
 import 'mocks/mock_serie.dart';
-import 'models/Producao.dart';
-
 
 void main() => runApp(MainApp());
 
@@ -18,7 +17,6 @@ class MainApp extends StatefulWidget {
 
   @override
   State<MainApp> createState() => _MainAppState();
-
 }
 
 class _MainAppState extends State<MainApp> {
@@ -26,7 +24,7 @@ class _MainAppState extends State<MainApp> {
   final List<dynamic> curtidos = [];
   final List<dynamic> naoCurtidos = [];
 
-  _naoGostei(int index){
+  _naoGostei(int index) {
     setState(() {
       debugPrint(naoAvaliados[index].titulo);
       naoCurtidos.add(naoAvaliados[index]);
@@ -34,7 +32,35 @@ class _MainAppState extends State<MainApp> {
     });
   }
 
-  _gostei(int index){
+  _foiCurtido(Producao producao) {
+    return curtidos.contains(producao);
+  }
+
+  _foiNaoCurtido(Producao producao) {
+    return naoCurtidos.contains(producao);
+  }
+
+  _toggleCurtido(Producao producao) {
+    setState(() {
+      if (_foiCurtido(producao)) {
+        curtidos.remove(producao);
+      }
+      curtidos.add(producao);
+      if (_foiNaoCurtido(producao)) naoCurtidos.remove(producao);
+    });
+  }
+
+  _toggleNaoCurtido(Producao producao) {
+    setState(() {
+      if (_foiNaoCurtido(producao)) {
+        naoCurtidos.remove(producao);
+      }
+      naoCurtidos.add(producao);
+      if (_foiCurtido(producao)) curtidos.remove(producao);
+    });
+  }
+
+  _gostei(int index) {
     setState(() {
       debugPrint(naoAvaliados[index].titulo);
       curtidos.add(naoAvaliados[index]);
@@ -42,8 +68,25 @@ class _MainAppState extends State<MainApp> {
     });
   }
 
+  _removerCurtido(int index) {
+    setState(() {
+      naoAvaliados.add(curtidos[index]);
+      curtidos.removeAt(index);
+    });
+  }
+
+  _removerNaoCurtido(int index) {
+    setState(() {
+      // debugPrint(naoCurtidos[index].titulo);
+      debugPrint(index.toString());
+      naoAvaliados.add(naoCurtidos[index]);
+      naoCurtidos.removeAt(index);
+    });
+  }
+
   @override
   void initState() {
+    super.initState();
     naoAvaliados.addAll(FILMES);
     naoAvaliados.addAll(SERIES);
     naoAvaliados.shuffle();
@@ -57,11 +100,25 @@ class _MainAppState extends State<MainApp> {
       ).copyWith(
         colorScheme: lightColorScheme,
       ),
+      debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.HOME,
       routes: {
-        AppRoutes.HOME: (context) => PaginaInicial(_gostei, _naoGostei, producoes: naoAvaliados,),
-        AppRoutes.DETALHES_FILME: (context) => DetalhesFilme(filme: FILMES[0]),
-        AppRoutes.DETALHES_SERIE: (context) => DetalhesSerie(serie: SERIES[0])
+        AppRoutes.HOME: (context) => PaginaInicial(
+              _gostei,
+              _naoGostei,
+              _removerCurtido,
+              _removerNaoCurtido,
+              producoes: naoAvaliados,
+              producoesCurtidas: curtidos,
+              producoesNaoCurtidas: naoCurtidos,
+            ),
+        AppRoutes.DETALHES_FILME: (context) => DetalhesFilme(
+              foiCurtido: _foiCurtido,
+              foiNaoCurtido: _foiNaoCurtido,
+              toggleCurtido: _toggleCurtido,
+              toggleNaoCurtido: _toggleNaoCurtido,
+            ),
+        AppRoutes.DETALHES_SERIE: (context) => DetalhesSerie()
       },
     );
   }
