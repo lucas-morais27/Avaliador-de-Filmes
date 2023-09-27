@@ -75,8 +75,8 @@ class DetalhesFilme extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                           child: Image(
                             image: Image.network(filme.posterUrl).image,
-                            height: 270,
-                            fit: BoxFit.cover,
+                            //height: 270,
+                            fit: BoxFit.fill,
                             // width: double.infinity,
                           ),
                         ),
@@ -208,7 +208,7 @@ class DetalhesFilme extends StatelessWidget {
             ],
           ),
         ),
-        floatingActionButton: Column(
+        /*floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
@@ -250,6 +250,6 @@ class DetalhesFilme extends StatelessWidget {
               ],
             ),
           ],
-        ));
+        )*/);
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:und1_mobile/components/item_producao.dart';
+import 'package:und1_mobile/styles.dart';
 
 class ListaProducao extends StatefulWidget {
   final Function(int) remover;
@@ -27,26 +28,31 @@ class _ListaProducaoState extends State<ListaProducao> {
 
   @override
   Widget build(BuildContext context) {
+    var cores = Theme.of(context).colorScheme;
+
     return SingleChildScrollView(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      children: _listaDeProducoes(widget.listaProducoes),
+      children: _listaDeProducoes(widget.listaProducoes, cores),
     ));
   }
 
-  List<Widget> _listaDeProducoes(List<dynamic> producoes) {
+  List<Widget> _listaDeProducoes(List<dynamic> producoes, ColorScheme cores) {
     List<Widget> lista = [];
     if (producoes.isEmpty) {
       lista.add(Container(
-        margin: EdgeInsets.only(top: 20),
+        margin: const EdgeInsets.only(top: 20),
         alignment: Alignment.topCenter,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.asset(
               'assets/movie-symbol.png',
               height: 50,
+              color: cores.onSecondary,
             ),
-            const Text("Nenhum produção cadastrada!")
+            const SizedBox(height: 8,),
+            Text("Nenhuma produção cadastrada!", style: estiloCorpoTexto1.copyWith(color: cores.onSecondary),)
           ],
         ),
       ));

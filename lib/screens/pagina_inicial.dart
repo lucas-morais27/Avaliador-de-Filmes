@@ -35,9 +35,9 @@ class _PaginaInicialState extends State<PaginaInicial> {
 
   late List<Widget> _screens;
   final List<String> _titulosDaPagina = [
-    'Filmes Não Curtidos',
+    'Não Curtidos',
     'Não Avaliados',
-    'Filmes Curtidos'
+    'Curtidos'
   ];
 
   @override
@@ -64,15 +64,10 @@ class _PaginaInicialState extends State<PaginaInicial> {
     final ColorScheme cores = Theme.of(context).colorScheme;
 
     return Scaffold(
+      backgroundColor: cores.secondary,
       appBar: AppBar(
-        title: const Row(
-          children: [
-            Text(
-              'RevIls',
-              style: estiloSubTitulo1,
-            ),
-          ],
-        ),
+        title:
+            Center(child: Text(_titulosDaPagina[_selectedIndex], style: estiloTitulo3,)),
       ),
       body: Container(
         child: _screens.elementAt(_selectedIndex),

@@ -92,6 +92,24 @@ class DetalhesSerie extends StatelessWidget {
                           height: 32,
                         ),
                         Text(
+                          serie.criador,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: cores.onSecondary,
+                          ),
+                        ),
+                        Text(
+                          "Criador ",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: cores.onSecondary,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        Text(
                           serie.numeroTemporadas,
                           style: TextStyle(
                             fontSize: 18,

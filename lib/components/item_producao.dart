@@ -70,31 +70,21 @@ class _ItemProducaoState extends State<ItemProducao> {
               );
             }
           },
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Card(
-              shape: BeveledRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              color: cores.onBackground,
-              child: Container(
+          child: Container(
                   decoration: BoxDecoration(
+                    color: cores.primary,
                       border: Border(
                           bottom:
                               BorderSide(color: cores.secondary, width: 0.75))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Flexible(
+                      Flexible(
                             flex: 3,
                             child: Image.network(
                               widget.producao.posterUrl,
                               fit: BoxFit.fill,
-                              height: 120,
                             )),
-                      ),
                       const Expanded(child: SizedBox()),
                       Flexible(
                         flex: 8,
@@ -105,13 +95,11 @@ class _ItemProducaoState extends State<ItemProducao> {
                             Text(
                               widget.producao.titulo,
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
+                                  estiloSubTitulo3.copyWith(fontWeight: FontWeight.bold, color: cores.onPrimaryContainer),
                             ),
                             Text(
                               "Ano de lançamento: ${widget.producao.anoLancamento}",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
+                              style: estiloCorpoTexto1.copyWith(color: cores.onPrimaryContainer),
                             ),
                           ],
                         ),
@@ -119,7 +107,6 @@ class _ItemProducaoState extends State<ItemProducao> {
                     ],
                   )),
             ),
-          ),
-        ));
+          );
   }
 }
