@@ -32,34 +32,6 @@ class _MainAppState extends State<MainApp> {
     });
   }
 
-  _foiCurtido(Producao producao) {
-    return curtidos.contains(producao);
-  }
-
-  _foiNaoCurtido(Producao producao) {
-    return naoCurtidos.contains(producao);
-  }
-
-  _toggleCurtido(Producao producao) {
-    setState(() {
-      if (_foiCurtido(producao)) {
-        curtidos.remove(producao);
-      }
-      curtidos.add(producao);
-      if (_foiNaoCurtido(producao)) naoCurtidos.remove(producao);
-    });
-  }
-
-  _toggleNaoCurtido(Producao producao) {
-    setState(() {
-      if (_foiNaoCurtido(producao)) {
-        naoCurtidos.remove(producao);
-      }
-      naoCurtidos.add(producao);
-      if (_foiCurtido(producao)) curtidos.remove(producao);
-    });
-  }
-
   _gostei(int index) {
     setState(() {
       debugPrint(naoAvaliados[index].titulo);
@@ -112,12 +84,7 @@ class _MainAppState extends State<MainApp> {
               producoesCurtidas: curtidos,
               producoesNaoCurtidas: naoCurtidos,
             ),
-        AppRoutes.DETALHES_FILME: (context) => DetalhesFilme(
-              foiCurtido: _foiCurtido,
-              foiNaoCurtido: _foiNaoCurtido,
-              toggleCurtido: _toggleCurtido,
-              toggleNaoCurtido: _toggleNaoCurtido,
-            ),
+        AppRoutes.DETALHES_FILME: (context) => DetalhesFilme(),
         AppRoutes.DETALHES_SERIE: (context) => DetalhesSerie()
       },
     );
