@@ -1,24 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:und1_mobile/components/botao_padrao.dart';
 import 'package:und1_mobile/styles.dart';
 import '../models/filme.dart';
+import '../models/producao_model.dart';
 import '../models/serie.dart';
 import '../utils/app_routes.dart';
 
 class CardProducao extends StatelessWidget {
-  final Function(int) gostei;
-  final Function(int) naoGostei;
-  final int index;
-  Function() pular;
-  dynamic producao;
-
-  CardProducao(this.gostei, this.naoGostei, this.pular,
-      {super.key, required this.producao, required this.index});
 
   @override
   Widget build(BuildContext context) {
     var cores = Theme.of(context).colorScheme;
+    var producoes = context.watch<ProducaoModel>();
+    var producao = producoes.producaoAtual;
 
     return InkWell(
         onTap: () {
@@ -44,8 +40,8 @@ class CardProducao extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(16)),
-                    color: cores.primary.withOpacity(0.8),
+                    const BorderRadius.vertical(top: Radius.circular(16)),
+                    color: cores.primary.withOpacity(0.9),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,37 +49,38 @@ class CardProducao extends StatelessWidget {
                       Text(
                         producao.titulo,
                         style:
-                            estiloSubTitulo4.copyWith(color: cores.onPrimary),
+                        estiloSubTitulo4.copyWith(color: cores.onPrimary),
                       ),
                       Text(
                         producao.anoLancamento,
                         style:
-                            estiloCorpoTexto1.copyWith(color: cores.onPrimary),
+                        estiloCorpoTexto1.copyWith(color: cores.onPrimary, fontWeight: FontWeight.bold),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           BotaoPadrao.icone(
                             onPressed: () {
-                              naoGostei(index);
+                              producoes.naoGostei();
                             },
                             icone: const Icon(Icons.thumb_down),
                           ),
                           const SizedBox(width: 32),
                           Expanded(
                               child: BotaoPadrao(
-                            onPressed: () {
-                              pular();
-                            },
-                            texto: 'Pular',
-                            //icone: const Icon(Icons.skip_next_rounded),
-                          )),
+                                onPressed: () {
+                                  producoes.proximoCard();
+                                  producao = producoes.producaoAtual;
+                                },
+                                texto: 'Pular',
+                                //icone: const Icon(Icons.skip_next_rounded),
+                              )),
                           const SizedBox(
                             width: 32,
                           ),
                           BotaoPadrao.icone(
                             onPressed: () {
-                              gostei(index);
+                              producoes.gostei();
                             },
                             icone: const Icon(Icons.thumb_up),
                           ),
