@@ -1,0 +1,16 @@
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:und1_mobile/models/producao_model.dart';
+import 'package:und1_mobile/screens/menu_navegacao.dart';
+
+class PaginaInicial extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => ProducaoModel())
+    ],
+    child: MenuNavegacao()
+    );
+  }
+
+}

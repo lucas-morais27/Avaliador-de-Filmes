@@ -9,8 +9,8 @@ class ListaProducao extends StatefulWidget {
   final Function(int) remover;
   List<dynamic> listaProducoes;
 
-  ListaProducao(
-    this.remover, {
+  ListaProducao(this.remover,
+  {
     super.key,
     required this.listaProducoes,
   });
@@ -21,9 +21,7 @@ class ListaProducao extends StatefulWidget {
 
 class _ListaProducaoState extends State<ListaProducao> {
   _remover(int idx) {
-    setState(() {
-      widget.remover(idx);
-    });
+    widget.remover(idx);
   }
 
   @override
