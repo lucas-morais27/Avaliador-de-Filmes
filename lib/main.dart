@@ -7,11 +7,16 @@ import 'package:und1_mobile/screens/menu_navegacao.dart';
 import 'package:und1_mobile/screens/pagina_incial.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'mocks/mock_filme.dart';
 import 'mocks/mock_serie.dart';
 
-void main() => runApp(MainApp());
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  
+  runApp(MainApp());
+}
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
