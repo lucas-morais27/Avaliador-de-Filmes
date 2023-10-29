@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:und1_mobile/screens/detalhes_filme.dart';
-import 'package:und1_mobile/screens/detalhes_serie.dart';
-import 'package:und1_mobile/screens/pagina_incial.dart';
+import 'package:und1_mobile/screens/detalhes_filme_page.dart';
+import 'package:und1_mobile/screens/detalhes_serie_page.dart';
+import 'package:und1_mobile/screens/incial_page.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:und1_mobile/screens/pagina_filmes_nao_avaliados.dart';
+import 'package:und1_mobile/screens/filmes_nao_avaliados_page.dart';
 import 'package:und1_mobile/styles.dart';
 
-import 'pagina_curtidos.dart';
-import 'pagina_nao_curtidos.dart';
+import 'curtidos_page.dart';
+import 'nao_curtidos_page.dart';
 
 class MenuNavegacao extends StatefulWidget {
   const MenuNavegacao({super.key});
