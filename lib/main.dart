@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:und1_mobile/models/producao.dart';
 import 'package:und1_mobile/screens/detalhes_filme.dart';
 import 'package:und1_mobile/screens/detalhes_serie.dart';
-import 'package:und1_mobile/screens/menu_navegacao.dart';
 import 'package:und1_mobile/screens/pagina_incial.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
-import 'mocks/mock_filme.dart';
-import 'mocks/mock_serie.dart';
-
-void main() => runApp(MainApp());
+void main() => runApp(const MainApp());
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -21,7 +16,6 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,9 +27,9 @@ class _MainAppState extends State<MainApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.HOME,
       routes: {
-        AppRoutes.HOME: (context) => PaginaInicial(),
-        AppRoutes.DETALHES_FILME: (context) => DetalhesFilme(),
-        AppRoutes.DETALHES_SERIE: (context) => DetalhesSerie()
+        AppRoutes.HOME: (context) => const PaginaInicial(),
+        AppRoutes.DETALHES_FILME: (context) => const DetalhesFilme(),
+        AppRoutes.DETALHES_SERIE: (context) => const DetalhesSerie()
       },
     );
   }

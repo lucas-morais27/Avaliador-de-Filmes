@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:und1_mobile/mocks/mock_avaliacao.dart';
 import 'package:und1_mobile/models/avaliacao.dart';
-import 'package:und1_mobile/models/producao.dart';
 
 import '../models/filme.dart';
 

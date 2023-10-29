@@ -12,5 +12,12 @@ class Filme extends Producao {
     required String anoLancamento,
     required List<Avaliacao>? avaliacoes,
     required this.diretor,
-  }) : super(id, titulo, sinopse, posterUrl, anoLancamento, avaliacoes);
+  }) : super(
+          id,
+          titulo,
+          sinopse,
+          posterUrl,
+          anoLancamento,
+          avaliacoes,
+        );
 }

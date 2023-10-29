@@ -5,6 +5,7 @@ import '../components/lista_producao.dart';
 import '../models/producao_model.dart';
 
 class PaginaCurtidos extends StatefulWidget {
+  const PaginaCurtidos({super.key});
 
   @override
   State<PaginaCurtidos> createState() => _PaginaCurtidosState();
@@ -14,6 +15,7 @@ class _PaginaCurtidosState extends State<PaginaCurtidos> {
   @override
   Widget build(BuildContext context) {
     var producoes = context.watch<ProducaoModel>();
-    return ListaProducao(producoes.removerCurtido, listaProducoes: producoes.curtidos);
+    return ListaProducao(producoes.removerCurtido,
+        listaProducoes: producoes.curtidos);
   }
 }

@@ -4,13 +4,12 @@ import 'package:und1_mobile/models/producao_model.dart';
 import 'package:und1_mobile/screens/menu_navegacao.dart';
 
 class PaginaInicial extends StatelessWidget {
+  const PaginaInicial({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => ProducaoModel())
-    ],
-    child: MenuNavegacao()
-    );
+    ], child: const MenuNavegacao());
   }
-
 }
