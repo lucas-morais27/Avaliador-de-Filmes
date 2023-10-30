@@ -11,9 +11,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'mocks/mock_filme.dart';
 import 'mocks/mock_serie.dart';
 
-void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: const FirebaseOptions(
+      apiKey: "AIzaSyCMKnYQV4lh0LL6v4HWUsA3kgTWsod_zic",
+      appId: "1:154519222523:android:3a02843425fe4444b9185e",
+      messagingSenderId: "154519222523",
+      projectId: "proj-mobile-filmes",
+    ),
+  );
   
   runApp(MainApp());
 }

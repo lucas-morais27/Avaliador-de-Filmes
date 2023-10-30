@@ -50,7 +50,7 @@ packages:
     source: hosted
     version: "1.1.1"
   cloud_firestore:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: cloud_firestore
       sha256: "666ae6914f5d9dde04d7fb49c5983d3bf7b887021a79a3ac17de2e95386b8006"
@@ -105,8 +105,32 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  firebase_core:
+  firebase_auth:
+    dependency: "direct main"
+    description:
+      name: firebase_auth
+      sha256: ee5e4f6e79483d1b39e2fe81cdef74f4c295c9865e150aefacd615eea96d3e7b
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.12.0"
+  firebase_auth_platform_interface:
     dependency: transitive
+    description:
+      name: firebase_auth_platform_interface
+      sha256: a664a8f1dbf73e6a56fd41364bcd0ad24f8d9d57428b365199dc795ee52b7d27
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.2"
+  firebase_auth_web:
+    dependency: transitive
+    description:
+      name: firebase_auth_web
+      sha256: "6a3c8c09c9ffcfea83ac4ce3d18d8b4c467c77d57713b2d786fd69ece5bb4a48"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.8.5"
+  firebase_core:
+    dependency: "direct main"
     description:
       name: firebase_core
       sha256: "37299e4907391d7fac8c7ea059bb3292768cc07b72b6c6c777675cc58da2ef4d"
