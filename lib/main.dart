@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:und1_mobile/screens/detalhes_filme_page.dart';
 import 'package:und1_mobile/screens/detalhes_serie_page.dart';
 import 'package:und1_mobile/screens/incial_page.dart';
+import 'package:und1_mobile/screens/login_page.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
@@ -29,7 +30,8 @@ class _MainAppState extends State<MainApp> {
       routes: {
         AppRoutes.HOME: (context) => const PaginaInicial(),
         AppRoutes.DETALHES_FILME: (context) => const DetalhesFilme(),
-        AppRoutes.DETALHES_SERIE: (context) => const DetalhesSerie()
+        AppRoutes.DETALHES_SERIE: (context) => const DetalhesSerie(),
+        AppRoutes.LOGIN: (context) => const LoginPage(),
       },
     );
   }
