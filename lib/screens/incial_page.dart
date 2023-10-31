@@ -8,10 +8,13 @@ class PaginaInicial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    
+  var listas = ModalRoute.of(context)?.settings.arguments as Map<String, List<dynamic>>;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => ProducaoModel(),
+          create: (context) => ProducaoModel(listas),
         )
       ],
       child: const MenuNavegacao(),

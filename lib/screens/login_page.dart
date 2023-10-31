@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:und1_mobile/models/producao_model.dart';
 import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
@@ -48,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     var cores = Theme.of(context).colorScheme;
+    //var producoes = Provider.of(context).watch<ProducaoModel>();
     ButtonStyle _buttonStyle = ButtonStyle(
       padding: const MaterialStatePropertyAll<EdgeInsets>(
           EdgeInsets.all(12)),
@@ -138,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                               : const Icon(Icons.visibility_off),
                         )),
                   ),
-                  const Expanded(child: SizedBox(height: 0,)),
+                  const Expanded(child: SizedBox(height: 16,)),
                   ElevatedButton(
                       onPressed: () async {
                         String email = _usuarioController.text;
@@ -152,8 +155,12 @@ class _LoginPageState extends State<LoginPage> {
                             }
 
                             // Passei o usuário pra frente, vai que precisa em outro lugar
+                            Map<String, List<dynamic>> listas = {};
+                            listas['naoAvaliados'] = await Usuario.carregarListaNaoAvaliados();
+                            listas['naoCurtidos'] = [];
+                            listas['curtidos'] = [];
                             Navigator.of(context)
-                                .pushNamed(AppRoutes.HOME, arguments: usuarioLogado);
+                                .pushNamed(AppRoutes.HOME, arguments: listas);
                           }
                         } catch (e) {
                           _showLoginErrorDialog(context);

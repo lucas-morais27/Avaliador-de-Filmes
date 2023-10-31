@@ -2,7 +2,7 @@ import 'package:und1_mobile/models/serie.dart';
 
 List<Serie> SERIES = [
   Serie(
-    id: "1",
+    id: "1399",
     titulo: "Game of Thrones",
     sinopse:
         "Em uma terra onde os verões podem durar vários anos e o inverno toda uma vida, sete nobres famílias lutam pelo controle da mítica terra de Westeros, dividida depois de uma guerra. Num cenário que lembra a Europa medieval, reis, rainhas, cavaleiros e renegados usam todos os meios possíveis em um jogo político pela disputa do Trono de Ferro, o símbolo do poder absoluto.",
@@ -15,7 +15,7 @@ List<Serie> SERIES = [
     avaliacoes: null,
   ),
   Serie(
-      id: "2",
+      id: "114461",
       titulo: "Ahsoka",
       sinopse:
           "Situada após a queda do Império, a série segue a ex-cavaleira Jedi Ahsoka Tano enquanto ela investiga uma ameaça emergente a uma galáxia vulnerável.",
@@ -27,7 +27,7 @@ List<Serie> SERIES = [
       numeroEpisodios: "8",
       avaliacoes: []),
   Serie(
-      id: '3',
+      id: '1396',
       titulo: 'Breaking Bad',
       sinopse:
           'Ao saber que tem câncer, um professor passa a fabricar metanfetamina pelo futuro da família, mudando o destino de todos.',
@@ -39,7 +39,7 @@ List<Serie> SERIES = [
       posterUrl:
           'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/30erzlzIOtOK3k3T3BAl1GiVMP1.jpg'),
   Serie(
-      id: '4',
+      id: '2316',
       titulo: 'The Office',
       sinopse:
           'Michael Scott é o egocêntrico, insensível e incompetente gerente regional de uma subsidiária da Dunder Mifflin Paper Company. Michael acredita ser o cara mais engraçado do escritório, uma fonte de sabedoria para negócios e o melhor amigo de seus funcionários. Ele nem desconfia que a sua equipe o tolera apenas pelo fato dele assinar o contracheque deles. Sem saber o que os seus funcionários pensam a seu respeito, Michael acaba sempre alternando decisões absurdas ou patéticas, mas sempre hilárias.',

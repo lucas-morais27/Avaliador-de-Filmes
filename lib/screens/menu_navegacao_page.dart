@@ -55,7 +55,21 @@ class _MenuNavegacaoState extends State<MenuNavegacao> {
           _titulosDaPagina[_selectedIndex],
           style: estiloTitulo3,
         )),
+        actions: 
+          <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: const Icon(
+                  Icons.settings,
+                  size: 26.0,
+                ),
+              ),
+            ),
+          ],
       ),
+
       body: Container(
         child: _screens.elementAt(_selectedIndex),
       ),

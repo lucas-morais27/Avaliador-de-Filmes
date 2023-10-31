@@ -1,19 +1,39 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:und1_mobile/models/usuario.dart';
 
 import '../mocks/mock_filme.dart';
 import '../mocks/mock_serie.dart';
 
 class ProducaoModel extends ChangeNotifier {
-  final List<dynamic> _naoAvaliados = [];
-  final List<dynamic> _curtidos = [];
-  final List<dynamic> _naoCurtidos = [];
+  List<dynamic> _naoAvaliados = [];
+  List<dynamic> _curtidos = [];
+  List<dynamic> _naoCurtidos = [];
+
+  static final _db = FirebaseFirestore.instance;
 
   int _cardAtual = 0;
 
-  ProducaoModel(){
-    _naoAvaliados.addAll(FILMES);
-    _naoAvaliados.addAll(SERIES);
-    _naoAvaliados.shuffle();
+  ProducaoModel(Map<String, List<dynamic>> listas) {
+
+    /*var listaPadrao = [];
+    listaPadrao.addAll(FILMES);
+    listaPadrao.addAll(SERIES);
+    listaPadrao.shuffle();*/
+
+    //print(listas);
+
+    listas['naoAvaliados'] != null
+    ? _naoAvaliados = listas['naoAvaliados']!
+    : _naoAvaliados = [];
+
+    listas['naoCurtidos'] != null
+    ? _naoCurtidos = listas['naoCurtidos']!
+    : _naoCurtidos = [];
+
+    listas['curtidos'] != null
+    ? _curtidos = listas['curtidos']!
+    : _curtidos = [];
   }
 
   List<dynamic> get curtidos => _curtidos;
@@ -21,6 +41,10 @@ class ProducaoModel extends ChangeNotifier {
   List<dynamic> get naoAvaliados => _naoAvaliados;
   int get cardAtual => _cardAtual;
   dynamic get producaoAtual => naoAvaliados[cardAtual];
+
+  set naoAvaliados (List<dynamic> naoAvaliados) => _naoAvaliados = naoAvaliados;  
+  set curtidos (List<dynamic> curtidos) => _curtidos = curtidos;  
+  set naoCurtidos (List<dynamic> naoCurtidos) => _naoCurtidos = naoCurtidos;  
 
   proximoCard() {
     if(_cardAtual+1 == _naoAvaliados.length){
@@ -31,8 +55,11 @@ class ProducaoModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  naoGostei() {
+  naoGostei() async  {
       var index = _cardAtual;
+      final userData = await _db.collection("users").doc(Usuario.uid);
+      
+
       naoCurtidos.add(naoAvaliados[index]);
       naoAvaliados.removeAt(index);
       if(_cardAtual >= _naoAvaliados.length){
