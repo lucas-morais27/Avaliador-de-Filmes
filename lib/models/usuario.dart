@@ -62,29 +62,21 @@ class Usuario {
   }
 
   static Future<bool> login(String usuario, String senha) async {
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: usuario,
-        password: senha,
-      );
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: usuario,
+      password: senha,
+    );
 
-      // Se o login for bem-sucedido, o usuário é retornado
-      User? user = userCredential.user;
+    // Se o login for bem-sucedido, o usuário é retornado
+    User? user = userCredential.user;
 
-      if (user != null) {
-        // O usuário está logado com sucesso
-        print('Login bem-sucedido: ${user.uid}');
-        return true;
-      } else {
-        // O usuário é nulo, indicando uma falha no login
-        print('Falha no login');
-        return false;
-      }
-    } catch (e) {
-      print('Erro durante o login: $e');
-      // Lida com exceções, como usuário não encontrado, senha incorreta, etc.
+    if (user != null) {
+      // Login com sucesso
+      return true;
+    } else {
+      // Falha no login
+      return false;
     }
-    return false;
   }
 }

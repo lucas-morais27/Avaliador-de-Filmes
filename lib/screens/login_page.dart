@@ -13,6 +13,28 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usuarioController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
 
+  Future<void> _showLoginErrorDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Erro no login'),
+          content: const Text(
+            'Ocorreu um problema durante o login. Verifique suas credenciais e tente novamente.',
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     _usuarioController.dispose();
@@ -95,12 +117,16 @@ class _LoginPageState extends State<LoginPage> {
                   String email = _usuarioController.text;
                   String senha = _senhaController.text;
 
-                  if (await Usuario.login(email, senha)) {
-                    if (!context.mounted) {
-                      return;
-                    }
+                  try {
+                    if (await Usuario.login(email, senha)) {
+                      if (!context.mounted) {
+                        return;
+                      }
 
-                    Navigator.of(context).pushNamed(AppRoutes.HOME);
+                      Navigator.of(context).pushNamed(AppRoutes.HOME);
+                    }
+                  } catch (e) {
+                    _showLoginErrorDialog(context);
                   }
                 },
                 child: const Text(
