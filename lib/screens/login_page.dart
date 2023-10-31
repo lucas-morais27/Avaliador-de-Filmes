@@ -118,12 +118,15 @@ class _LoginPageState extends State<LoginPage> {
                   String senha = _senhaController.text;
 
                   try {
-                    if (await Usuario.login(email, senha)) {
+                    Usuario? usuarioLogado = await Usuario.login(email, senha);
+                    if (usuarioLogado != null) {
                       if (!context.mounted) {
                         return;
                       }
 
-                      Navigator.of(context).pushNamed(AppRoutes.HOME);
+                      // Passei o usuário pra frente, vai que precisa em outro lugar
+                      Navigator.of(context)
+                          .pushNamed(AppRoutes.HOME, arguments: usuarioLogado);
                     }
                   } catch (e) {
                     _showLoginErrorDialog(context);

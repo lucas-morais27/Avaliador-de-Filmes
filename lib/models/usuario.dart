@@ -6,23 +6,20 @@ import 'package:und1_mobile/mocks/mock_filme.dart';
 import '../mocks/mock_serie.dart';
 
 class Usuario {
-  final String email;
-  final String senha;
+  String email;
+  String senha;
 
-  String? _uid;
+  String? uid;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
 
-  Usuario({
-    required this.email,
-    required this.senha,
-  });
+  Usuario({required this.email, required this.senha, this.uid});
 
-  String? get uid => _uid;
-  set uid(String? uid) => _uid = uid;
+  // String? get uid => _uid;
+  // set uid(String? uid) => _uid = uid;
 
   Future<String> salvarUsuario() {
-    if (_uid == null) {
+    if (uid == null) {
       return _cadastrarUsuario();
     } else {
       //TODO _atualizarUsuario();
@@ -39,8 +36,8 @@ class Usuario {
         producoesIniciais.addAll(FILMES);
         producoesIniciais.addAll(SERIES);
         producoesIniciais.shuffle();
-        _uid = result.user?.uid;
-        _db.collection('users').doc(_uid).set({
+        uid = result.user?.uid;
+        _db.collection('users').doc(uid).set({
           "email": email,
           "naoAvaliados": producoesIniciais.map((p) => p.id),
           "naoCurtidos": [],
@@ -61,22 +58,75 @@ class Usuario {
     return '';
   }
 
-  static Future<bool> login(String usuario, String senha) async {
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: usuario,
-      password: senha,
-    );
+  static Future<Usuario?> login(String usuario, String senha) async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: usuario,
+        password: senha,
+      );
 
-    // Se o login for bem-sucedido, o usuário é retornado
-    User? user = userCredential.user;
+      // Se o login for bem-sucedido, preencha um objeto Usuario com os dados obtidos
+      User? user = userCredential.user;
 
-    if (user != null) {
-      // Login com sucesso
-      return true;
-    } else {
-      // Falha no login
-      return false;
+      if (user != null) {
+        // Recupere os detalhes do usuário do Firebase
+        User firebaseUser = FirebaseAuth.instance.currentUser!;
+        String userEmail = firebaseUser.email ?? '';
+        String userId = firebaseUser.uid;
+
+        // Preencha o objeto Usuario com os dados do Firebase
+        Usuario usuario = Usuario(email: userEmail, senha: senha, uid: userId);
+        return usuario;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      debugPrint("Erro de login: $e");
+      return null;
+    }
+  }
+
+  Future<void> deleteUser() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await user.delete();
+      }
+    } catch (e) {
+      debugPrint('Erro ao excluir o usuário: $e');
+    }
+  }
+
+  Future<String> atualizarEmailESenha(
+    String novoEmail,
+    String novaSenha,
+  ) async {
+    User? user = FirebaseAuth.instance.currentUser!;
+
+    try {
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: senha,
+      );
+
+      user.reauthenticateWithCredential(credential).then(
+        (value) async {
+          await user.updateEmail(novoEmail);
+          await user.updatePassword(novaSenha);
+          email = novoEmail;
+          senha = novaSenha;
+        },
+      );
+      return "Email e senha atualizados com sucesso";
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return 'A senha fornecida é muito fraca.';
+      } else {
+        return 'Erro ao atualizar email/senha: ${e.message}';
+      }
+    } catch (e) {
+      return 'Erro ao atualizar email/senha: $e';
     }
   }
 }
