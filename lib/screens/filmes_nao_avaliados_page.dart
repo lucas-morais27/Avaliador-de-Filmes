@@ -5,14 +5,15 @@ import 'package:und1_mobile/styles.dart';
 
 import '../models/producao_model.dart';
 
-class PaginaFilmesNaoAvaliados extends StatefulWidget {
-  const PaginaFilmesNaoAvaliados({super.key});
+class PaginaFilmesNaoAvaliadosPage extends StatefulWidget {
+  const PaginaFilmesNaoAvaliadosPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _PaginaFilmesNaoAvaliadosState();
+  State<StatefulWidget> createState() => _PaginaFilmesNaoAvaliadosPageState();
 }
 
-class _PaginaFilmesNaoAvaliadosState extends State<PaginaFilmesNaoAvaliados> {
+class _PaginaFilmesNaoAvaliadosPageState
+    extends State<PaginaFilmesNaoAvaliadosPage> {
   @override
   Widget build(BuildContext context) {
     var cores = Theme.of(context).colorScheme;
@@ -33,7 +34,7 @@ class _PaginaFilmesNaoAvaliadosState extends State<PaginaFilmesNaoAvaliados> {
             ],
           ));
     } else {
-      return CardProducao();
+      return const CardProducao();
     }
   }
 }

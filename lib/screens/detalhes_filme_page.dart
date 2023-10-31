@@ -4,8 +4,8 @@ import 'package:und1_mobile/models/avaliacao.dart';
 
 import '../models/filme.dart';
 
-class DetalhesFilme extends StatelessWidget {
-  const DetalhesFilme({super.key});
+class DetalhesFilmePage extends StatelessWidget {
+  const DetalhesFilmePage({super.key});
 
   @override
   Widget build(BuildContext context) {

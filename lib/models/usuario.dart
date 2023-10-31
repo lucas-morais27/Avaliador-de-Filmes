@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:und1_mobile/mocks/mock_filme.dart';
+
 import '../mocks/mock_serie.dart';
-import 'avaliacao.dart';
 
 class Usuario {
   final String email;
@@ -18,12 +18,11 @@ class Usuario {
     required this.senha,
   });
 
-
   String? get uid => _uid;
   set uid(String? uid) => _uid = uid;
 
   Future<String> salvarUsuario() {
-    if(_uid == null) {
+    if (_uid == null) {
       return _cadastrarUsuario();
     } else {
       //TODO _atualizarUsuario();
@@ -33,22 +32,20 @@ class Usuario {
 
   Future<String> _cadastrarUsuario() async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: senha
-      ).then((result) {
+      await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: senha)
+          .then((result) {
         List<dynamic> producoesIniciais = [];
         producoesIniciais.addAll(FILMES);
         producoesIniciais.addAll(SERIES);
         producoesIniciais.shuffle();
         _uid = result.user?.uid;
-        _db.collection('users').doc(_uid).set(
-            {
-              "email": email,
-              "naoAvaliados": producoesIniciais.map((p) => p.id),
-              "naoCurtidos": [],
-              "curtidos": []
-            }
-        );
+        _db.collection('users').doc(_uid).set({
+          "email": email,
+          "naoAvaliados": producoesIniciais.map((p) => p.id),
+          "naoCurtidos": [],
+          "curtidos": []
+        });
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -56,11 +53,38 @@ class Usuario {
       } else if (e.code == 'email-already-in-use') {
         return 'Esse email já foi cadastrado.';
       }
-    } catch (e){
+    } catch (e) {
       debugPrint(e.toString());
       return 'Não foi possível cadastrar usuário.';
     }
 
     return '';
+  }
+
+  static Future<bool> login(String usuario, String senha) async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: usuario,
+        password: senha,
+      );
+
+      // Se o login for bem-sucedido, o usuário é retornado
+      User? user = userCredential.user;
+
+      if (user != null) {
+        // O usuário está logado com sucesso
+        print('Login bem-sucedido: ${user.uid}');
+        return true;
+      } else {
+        // O usuário é nulo, indicando uma falha no login
+        print('Falha no login');
+        return false;
+      }
+    } catch (e) {
+      print('Erro durante o login: $e');
+      // Lida com exceções, como usuário não encontrado, senha incorreta, etc.
+    }
+    return false;
   }
 }

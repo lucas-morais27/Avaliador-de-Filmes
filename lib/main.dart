@@ -4,11 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:und1_mobile/screens/detalhes_filme_page.dart';
 import 'package:und1_mobile/screens/detalhes_serie_page.dart';
 import 'package:und1_mobile/screens/incial_page.dart';
+import 'package:und1_mobile/screens/login_page.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
-import 'screens/pagina_cadastro.dart';
-import 'screens/pagina_login.dart';
+import 'screens/cadastro_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,10 +44,10 @@ class _MainAppState extends State<MainApp> {
       initialRoute: AppRoutes.LOGIN,
       routes: {
         AppRoutes.HOME: (context) => const PaginaInicial(),
-        AppRoutes.DETALHES_FILME: (context) => const DetalhesFilme(),
+        AppRoutes.DETALHES_FILME: (context) => const DetalhesFilmePage(),
         AppRoutes.DETALHES_SERIE: (context) => const DetalhesSerie(),
-        AppRoutes.LOGIN: (context) => PaginaLogin(),
-        AppRoutes.CADASTRO: (context) => PaginaCadastro()
+        AppRoutes.LOGIN: (context) => const LoginPage(),
+        AppRoutes.CADASTRO: (context) => const CadastroPage()
       },
     );
   }

@@ -15,10 +15,10 @@ class MenuNavegacao extends StatefulWidget {
 class _MenuNavegacaoState extends State<MenuNavegacao> {
   int _selectedIndex = 1;
 
-  static const TextStyle optionStyle = TextStyle(
-    fontSize: 30,
-    fontWeight: FontWeight.bold,
-  );
+  // static const TextStyle optionStyle = TextStyle(
+  //   fontSize: 30,
+  //   fontWeight: FontWeight.bold,
+  // );
 
   late List<Widget> _screens;
   final List<String> _titulosDaPagina = [
@@ -31,9 +31,9 @@ class _MenuNavegacaoState extends State<MenuNavegacao> {
   void initState() {
     super.initState();
     _screens = [
-      const PaginaNaoCurtidos(),
-      const PaginaFilmesNaoAvaliados(),
-      const PaginaCurtidos(),
+      const NaoCurtidosPage(),
+      const PaginaFilmesNaoAvaliadosPage(),
+      const CurtidosPage(),
     ];
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:und1_mobile/models/usuario.dart';
+import 'package:und1_mobile/utils/app_routes.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,7 +25,6 @@ class _LoginPageState extends State<LoginPage> {
     var cores = Theme.of(context).colorScheme;
 
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       backgroundColor: cores.onSecondaryContainer,
       appBar: AppBar(
         title: const Text(
@@ -39,7 +39,6 @@ class _LoginPageState extends State<LoginPage> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               const SizedBox(height: 16),
@@ -54,8 +53,17 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   labelText: 'Usuário',
                   labelStyle: TextStyle(color: cores.onSecondary),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: cores.onSecondary),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: cores.primary,
+                      width: 2.0,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: cores.primary,
+                      width: 2.0,
+                    ),
                   ),
                 ),
               ),
@@ -67,23 +75,45 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   labelText: 'Senha',
                   labelStyle: TextStyle(color: cores.onSecondary),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: cores.onSecondary),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: cores.primary,
+                      width: 2.0,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: cores.primary,
+                      width: 2.0,
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   String email = _usuarioController.text;
                   String senha = _senhaController.text;
 
-                  // Fazer lógica de Login
-                  print('Usuário: $email');
-                  print('Senha: $senha');
+                  if (await Usuario.login(email, senha)) {
+                    if (!context.mounted) {
+                      return;
+                    }
+
+                    Navigator.of(context).pushNamed(AppRoutes.HOME);
+                  }
                 },
                 child: const Text(
                   'Entrar',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AppRoutes.CADASTRO);
+                },
+                child: const Text(
+                  'Cadastre-se',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
