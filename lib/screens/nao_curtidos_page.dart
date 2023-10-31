@@ -4,14 +4,14 @@ import 'package:provider/provider.dart';
 import '../components/lista_producao.dart';
 import '../models/producao_model.dart';
 
-class PaginaNaoCurtidos extends StatefulWidget {
-  const PaginaNaoCurtidos({super.key});
+class NaoCurtidosPage extends StatefulWidget {
+  const NaoCurtidosPage({super.key});
 
   @override
-  State<PaginaNaoCurtidos> createState() => _PaginaNaoCurtidosState();
+  State<NaoCurtidosPage> createState() => _NaoCurtidosPageState();
 }
 
-class _PaginaNaoCurtidosState extends State<PaginaNaoCurtidos> {
+class _NaoCurtidosPageState extends State<NaoCurtidosPage> {
   @override
   Widget build(BuildContext context) {
     var producoes = context.watch<ProducaoModel>();
