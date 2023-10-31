@@ -4,6 +4,8 @@ import '../models/avaliacao.dart';
 import '../models/serie.dart';
 
 class DetalhesSerie extends StatelessWidget {
+  const DetalhesSerie({super.key});
+
   @override
   Widget build(BuildContext context) {
     var serie = ModalRoute.of(context)?.settings.arguments as Serie;

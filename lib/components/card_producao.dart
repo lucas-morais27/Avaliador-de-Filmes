@@ -1,14 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:und1_mobile/components/botao_padrao.dart';
 import 'package:und1_mobile/styles.dart';
+
 import '../models/filme.dart';
 import '../models/producao_model.dart';
 import '../models/serie.dart';
 import '../utils/app_routes.dart';
 
 class CardProducao extends StatelessWidget {
+  const CardProducao({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class CardProducao extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(16)),
+                        const BorderRadius.vertical(top: Radius.circular(16)),
                     color: cores.primary.withOpacity(0.9),
                   ),
                   child: Column(
@@ -49,12 +50,13 @@ class CardProducao extends StatelessWidget {
                       Text(
                         producao.titulo,
                         style:
-                        estiloSubTitulo4.copyWith(color: cores.onPrimary),
+                            estiloSubTitulo4.copyWith(color: cores.onPrimary),
                       ),
                       Text(
                         producao.anoLancamento,
-                        style:
-                        estiloCorpoTexto1.copyWith(color: cores.onPrimary, fontWeight: FontWeight.bold),
+                        style: estiloCorpoTexto1.copyWith(
+                            color: cores.onPrimary,
+                            fontWeight: FontWeight.bold),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -68,13 +70,13 @@ class CardProducao extends StatelessWidget {
                           const SizedBox(width: 32),
                           Expanded(
                               child: BotaoPadrao(
-                                onPressed: () {
-                                  producoes.proximoCard();
-                                  producao = producoes.producaoAtual;
-                                },
-                                texto: 'Pular',
-                                //icone: const Icon(Icons.skip_next_rounded),
-                              )),
+                            onPressed: () {
+                              producoes.proximoCard();
+                              producao = producoes.producaoAtual;
+                            },
+                            texto: 'Pular',
+                            //icone: const Icon(Icons.skip_next_rounded),
+                          )),
                           const SizedBox(
                             width: 32,
                           ),

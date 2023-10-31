@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:und1_mobile/components/card_producao.dart';
@@ -7,14 +6,13 @@ import 'package:und1_mobile/styles.dart';
 import '../models/producao_model.dart';
 
 class PaginaFilmesNaoAvaliados extends StatefulWidget {
-
+  const PaginaFilmesNaoAvaliados({super.key});
 
   @override
   State<StatefulWidget> createState() => _PaginaFilmesNaoAvaliadosState();
 }
 
 class _PaginaFilmesNaoAvaliadosState extends State<PaginaFilmesNaoAvaliados> {
-
   @override
   Widget build(BuildContext context) {
     var cores = Theme.of(context).colorScheme;

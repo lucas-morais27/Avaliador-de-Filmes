@@ -1,5 +1,4 @@
 import 'avaliacao.dart';
-import 'filme.dart';
 
 class Producao {
   final String id;
@@ -9,6 +8,12 @@ class Producao {
   final String anoLancamento;
   List<Avaliacao>? avaliacoes;
 
-  Producao(this.id, this.titulo, this.sinopse, this.posterUrl,this.anoLancamento, this.avaliacoes);
-
+  Producao(
+    this.id,
+    this.titulo,
+    this.sinopse,
+    this.posterUrl,
+    this.anoLancamento,
+    this.avaliacoes,
+  );
 }
