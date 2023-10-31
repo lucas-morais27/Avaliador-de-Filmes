@@ -59,30 +59,25 @@ class Usuario {
   }
 
   static Future<Usuario?> login(String usuario, String senha) async {
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: usuario,
-        password: senha,
-      );
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: usuario,
+      password: senha,
+    );
 
-      // Se o login for bem-sucedido, preencha um objeto Usuario com os dados obtidos
-      User? user = userCredential.user;
+    // Se o login for bem-sucedido, preencha um objeto Usuario com os dados obtidos
+    User? user = userCredential.user;
 
-      if (user != null) {
-        // Recupere os detalhes do usuário do Firebase
-        User firebaseUser = FirebaseAuth.instance.currentUser!;
-        String userEmail = firebaseUser.email ?? '';
-        String userId = firebaseUser.uid;
+    if (user != null) {
+      // Recupere os detalhes do usuário do Firebase
+      User firebaseUser = FirebaseAuth.instance.currentUser!;
+      String userEmail = firebaseUser.email ?? '';
+      String userId = firebaseUser.uid;
 
-        // Preencha o objeto Usuario com os dados do Firebase
-        Usuario usuario = Usuario(email: userEmail, senha: senha, uid: userId);
-        return usuario;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      debugPrint("Erro de login: $e");
+      // Preencha o objeto Usuario com os dados do Firebase
+      Usuario usuario = Usuario(email: userEmail, senha: senha, uid: userId);
+      return usuario;
+    } else {
       return null;
     }
   }
