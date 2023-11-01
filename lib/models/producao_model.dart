@@ -10,7 +10,7 @@ class ProducaoModel extends ChangeNotifier {
 
   int _cardAtual = 0;
 
-  ProducaoModel(){
+  ProducaoModel() {
     _naoAvaliados.addAll(FILMES);
     _naoAvaliados.addAll(SERIES);
     _naoAvaliados.shuffle();
@@ -22,8 +22,10 @@ class ProducaoModel extends ChangeNotifier {
   int get cardAtual => _cardAtual;
   dynamic get producaoAtual => naoAvaliados[cardAtual];
 
+  get avaliacoes => null;
+
   proximoCard() {
-    if(_cardAtual+1 == _naoAvaliados.length){
+    if (_cardAtual + 1 == _naoAvaliados.length) {
       _cardAtual = 0;
     } else {
       _cardAtual++;
@@ -32,23 +34,23 @@ class ProducaoModel extends ChangeNotifier {
   }
 
   naoGostei() {
-      var index = _cardAtual;
-      naoCurtidos.add(naoAvaliados[index]);
-      naoAvaliados.removeAt(index);
-      if(_cardAtual >= _naoAvaliados.length){
-        _cardAtual = 0;
-      }
-      notifyListeners();
+    var index = _cardAtual;
+    naoCurtidos.add(naoAvaliados[index]);
+    naoAvaliados.removeAt(index);
+    if (_cardAtual >= _naoAvaliados.length) {
+      _cardAtual = 0;
+    }
+    notifyListeners();
   }
 
   gostei() {
-      var index = _cardAtual;
-      curtidos.add(naoAvaliados[index]);
-      naoAvaliados.removeAt(index);
-      if(_cardAtual >= _naoAvaliados.length){
-        _cardAtual = 0;
-      }
-      notifyListeners();
+    var index = _cardAtual;
+    curtidos.add(naoAvaliados[index]);
+    naoAvaliados.removeAt(index);
+    if (_cardAtual >= _naoAvaliados.length) {
+      _cardAtual = 0;
+    }
+    notifyListeners();
   }
 
   removerCurtido(int index) {
@@ -58,8 +60,8 @@ class ProducaoModel extends ChangeNotifier {
   }
 
   removerNaoCurtido(int index) {
-      naoAvaliados.add(naoCurtidos[index]);
-      naoCurtidos.removeAt(index);
-      notifyListeners();
+    naoAvaliados.add(naoCurtidos[index]);
+    naoCurtidos.removeAt(index);
+    notifyListeners();
   }
 }
