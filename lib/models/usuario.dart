@@ -31,9 +31,9 @@ class Usuario {
       await FirebaseAuth.instance.currentUser?.delete();
     }
 
-    await db.collection("users").doc(Usuario.uid).delete().then(
-      (doc) => print("Document deleted"),
-    );
+    // await db.collection("users").doc(Usuario.uid).delete().then(
+    //   (doc) => print("Document deleted"),
+    // );
     uid = null;
   }
 
