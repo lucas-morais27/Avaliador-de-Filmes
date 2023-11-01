@@ -18,12 +18,12 @@ class Usuario {
 
   
 
-  Future<String> salvarUsuario() {
+  Future<String> salvarUsuario() async{
     if (uid == null) {
-      return _cadastrarUsuario();
+      return await _cadastrarUsuario();
     } else {
       //TODO _atualizarUsuario();
-      return 'Não foi possível atualizar o usuário' as Future<String>;
+      return 'Não foi possível atualizar o usuário';
     }
   }
 

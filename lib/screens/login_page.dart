@@ -156,8 +156,7 @@ class _LoginPageState extends State<LoginPage> {
 
                             // Passei o usuário pra frente, vai que precisa em outro lugar
                             Map<String, List<dynamic>> listas = await Usuario.carregarListas();
-                            Navigator.of(context)
-                                .pushNamed(AppRoutes.HOME, arguments: listas);
+                            Navigator.of(context).pushReplacementNamed(AppRoutes.HOME, arguments: listas);
                           }
                         } catch (e) {
                           _showLoginErrorDialog(context);
