@@ -18,7 +18,6 @@ class SettingPage extends StatelessWidget {
     logOut() {
       Usuario.signOut();
       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.LOGIN, ModalRoute.withName('/'));
-
     }
     
 

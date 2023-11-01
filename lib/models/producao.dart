@@ -6,7 +6,7 @@ class Producao {
   final String sinopse;
   final String posterUrl;
   final String anoLancamento;
-  List<Avaliacao>? avaliacoes;
+  List<Avaliacao> avaliacoes = [];
 
   Producao(
     this.id,

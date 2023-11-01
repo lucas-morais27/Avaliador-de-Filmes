@@ -4,10 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:und1_mobile/models/producao_model.dart';
 
 class Avaliacao {
+  String? id;
   final String producaoid;
   final String userid;
   final String nota;
   final String? comentario;
+
+  final _db = FirebaseFirestore.instance;
+  static final _baseCollection = 'reviews';
 
   Avaliacao({
     required this.producaoid,
@@ -15,6 +19,16 @@ class Avaliacao {
     required this.nota,
     required this.comentario,
   });
+
+  Avaliacao.id(
+  {
+    required this.id,
+    required this.producaoid,
+    required this.userid,
+    required this.nota,
+    required this.comentario,
+  }
+  );
 
   static Avaliacao fromMap(Map<String, dynamic> map) {
     return Avaliacao(
@@ -43,49 +57,63 @@ class Avaliacao {
     );
   }
 
-  void addAvaliacao(ProducaoModel model, String nota, String comentario,
-      String userid, dynamic producao) async {
-    final CollectionReference avaliacoes =
-        FirebaseFirestore.instance.collection('reviews');
 
-    final String producaoid = avaliacoes.doc().id;
-
-    final Avaliacao avaliacao = Avaliacao(
-      producaoid: producaoid,
-      userid: userid,
-      nota: nota,
-      comentario: comentario,
-    );
-
-    await avaliacoes.doc(producaoid).set(avaliacao.toMap());
-
-    model.avaliacoes.add(avaliacao);
-    model.notifyListeners();
+  Future<bool> adicionar() async {
+    if(id != null){
+      try {
+      await _db.collection(_baseCollection).doc(id).set({
+        'id': this.id,
+        'producaoid': this.producaoid,
+        'userid': this.userid,
+        'nota': this.nota,
+        'comentario': this.comentario
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+    }
+    return false;
   }
 
-  void atualizarAvaliacao(
-      ProducaoModel model, int index, String nota, String comentario) async {
-    final CollectionReference avaliacoes =
-        FirebaseFirestore.instance.collection('reviews');
-
-    final Avaliacao avaliacao = model.avaliacoes[index];
-
-    await avaliacoes.doc(avaliacao.producaoid).update(avaliacao.toMap());
-
-    model.avaliacoes[index] = avaliacao;
-    model.notifyListeners();
+  Future<bool> atualizar() async {
+    if(id!=null){
+      try {
+      await _db.collection(_baseCollection).doc(id).update({
+        'id': this.id,
+        'producaoid': this.producaoid,
+        'userid': this.userid,
+        'nota': this.nota,
+        'comentario': this.comentario
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+    }
+    return false;
   }
 
-  void deletarAvaliacao(ProducaoModel model, int index) async {
-    final CollectionReference avaliacoes =
-        FirebaseFirestore.instance.collection('reviews');
-
-    final Avaliacao avaliacao = model.avaliacoes[index];
-
-    await avaliacoes.doc(avaliacao.producaoid).delete();
-
-    model.avaliacoes.removeAt(index);
-    model.notifyListeners();
+  static Future<bool> remover(String id) async {
+    final db = FirebaseFirestore.instance;
+    try {
+      await db.collection(_baseCollection).doc(id).delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
+  
 
+  static Future<List<Avaliacao>> carregarAvaliacoes() async {
+    final db = FirebaseFirestore.instance;
+    var avaliacoesData = await db.collection(Avaliacao._baseCollection).get();
+    var avaliacoes = avaliacoesData.docs.map((doc) =>  doc.data()).toList();
+    return avaliacoes.map((e) => Avaliacao.id(
+      id: e['id'],
+      producaoid: e['producaoid'], 
+      userid: e['userid'], 
+      nota: e['nota'], 
+      comentario: e['comentario'])).toList();
+  }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:und1_mobile/screens/avaliar_page.dart';
+import 'package:provider/provider.dart';
+import 'package:und1_mobile/models/lista_avaliacoes.dart';
+import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
-import '../models/avaliacao_model.dart';
 import '../models/serie.dart';
 
 class DetalhesSerie extends StatelessWidget {
@@ -12,8 +13,8 @@ class DetalhesSerie extends StatelessWidget {
     var serie = ModalRoute.of(context)?.settings.arguments as Serie;
     final ColorScheme cores = Theme.of(context).colorScheme;
 
-    List<Avaliacao> listaAvaliacoes = [];
-    serie.avaliacoes = listaAvaliacoes;
+    var lista = context.watch<ListaAvaliacoes>();
+    serie.avaliacoes = lista.avaliacoesPorProducao(serie.id);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(52, 150, 9, 9),
@@ -172,7 +173,7 @@ class DetalhesSerie extends StatelessWidget {
               height: 24,
             ),
             Text(
-              'Avaliações dos usuários: ${listaAvaliacoes.length}',
+              'Avaliações dos usuários: ${serie.avaliacoes.length}',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -188,32 +189,55 @@ class DetalhesSerie extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: serie.avaliacoes!.length,
                 itemBuilder: (context, index) {
-                  final avaliacao = listaAvaliacoes[index];
+                  final avaliacao = serie.avaliacoes[index];
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            '${avaliacao.userid}:',
-                            style: TextStyle(
-                              color: cores.onSecondary,
-                              fontWeight: FontWeight.bold,
+                      InkWell(
+                        onTap: () {
+                          if (Usuario.uid == avaliacao.userid) {
+                            Navigator.of(context).pushNamed(
+                              AppRoutes.AVALIAR,
+                              arguments: {
+                                'producaoid': serie.id,
+                                'avaliacao': avaliacao,
+                              },
+                            );
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            FutureBuilder(
+                              future: Usuario.emailDoUsuario(avaliacao.userid),
+                              builder:
+                                  (context, AsyncSnapshot<String> snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text(
+                                    '${snapshot.data}:',
+                                    style: TextStyle(
+                                      color: cores.onSecondary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  );
+                                } else {
+                                  return CircularProgressIndicator();
+                                }
+                              },
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          Row(
-                            children: List.generate(
-                              5,
-                              (starIndex) => Icon(
-                                Icons.star,
-                                color: starIndex < int.parse(avaliacao.nota)
-                                    ? Colors.orange
-                                    : Colors.grey,
+                            const SizedBox(width: 8),
+                            Row(
+                              children: List.generate(
+                                5,
+                                (starIndex) => Icon(
+                                  Icons.star,
+                                  color: starIndex < int.parse(avaliacao.nota)
+                                      ? Colors.orange
+                                      : Colors.grey,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       Text(
                         avaliacao.comentario ?? "",
@@ -227,14 +251,16 @@ class DetalhesSerie extends StatelessWidget {
                   );
                 },
               ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.AVALIAR);
-              },
-              child: Center(
-                child: Text('Adicionar avaliação'),
-              ),
-            ),
+              if(!lista.jaAvaliou(serie.id, Usuario.uid!))
+                ElevatedButton(
+                  onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.AVALIAR,
+                        arguments: {'producaoid': serie.id});
+                  },
+                  child: Center(
+                    child: Text('Adicionar avaliação'),
+                  ),
+                ),
           ],
         ),
       ),

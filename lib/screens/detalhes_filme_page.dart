@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:und1_mobile/models/avaliacao_model.dart';
+import 'package:und1_mobile/models/lista_avaliacoes.dart';
+import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/screens/avaliar_page.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
@@ -11,10 +14,10 @@ class DetalhesFilmePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var filme = ModalRoute.of(context)?.settings.arguments as Filme;
-
     final ColorScheme cores = Theme.of(context).colorScheme;
-    List<Avaliacao> listaAvaliacoes = [];
-    filme.avaliacoes = listaAvaliacoes;
+
+    var lista = context.watch<ListaAvaliacoes>();
+    filme.avaliacoes = lista.avaliacoesPorProducao(filme.id);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(52, 150, 9, 9),
@@ -137,7 +140,7 @@ class DetalhesFilmePage extends StatelessWidget {
               height: 24,
             ),
             Text(
-              'Avaliações dos usuários: ${listaAvaliacoes.length}',
+              'Avaliações dos usuários: ${filme.avaliacoes.length}',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -153,32 +156,56 @@ class DetalhesFilmePage extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: filme.avaliacoes!.length,
                 itemBuilder: (context, index) {
-                  final avaliacao = listaAvaliacoes[index];
+                  final avaliacao = filme.avaliacoes[index];
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            '${avaliacao.userid}:',
-                            style: TextStyle(
-                              color: cores.onSecondary,
-                              fontWeight: FontWeight.bold,
+                      InkWell(
+                        onTap: () {
+                          if (Usuario.uid == avaliacao.userid) {
+                            Navigator.of(context).pushNamed(
+                              AppRoutes.AVALIAR,
+                              arguments: {
+                                'producaoid': filme.id,
+                                'avaliacao': avaliacao,
+                              },
+                            );
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            FutureBuilder(
+                              future: Usuario.emailDoUsuario(avaliacao.userid),
+                              builder:
+                                  (context, AsyncSnapshot<String> snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text(
+                                    '${snapshot.data}:',
+                                    style: TextStyle(
+                                      color: cores.onSecondary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  );
+                                } else {
+                                  return CircularProgressIndicator();
+                                }
+                              },
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          Row(
-                            children: List.generate(
-                              5,
-                              (starIndex) => Icon(
-                                Icons.star,
-                                color: starIndex < int.parse(avaliacao.nota)
-                                    ? Colors.orange
-                                    : Colors.grey,
+                            const SizedBox(width: 8),
+                            Row(
+                              children: List.generate(
+                                5,
+                                (starIndex) => Icon(
+                                  Icons.star,
+                                  color:
+                                      starIndex < double.parse(avaliacao.nota)
+                                          ? Colors.orange
+                                          : Colors.grey,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       Text(
                         avaliacao.comentario ?? "",
@@ -192,14 +219,16 @@ class DetalhesFilmePage extends StatelessWidget {
                   );
                 },
               ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.AVALIAR);
-              },
-              child: const Center(
-                child: Text('Adicionar avaliação'),
+            if(!lista.jaAvaliou(filme.id, Usuario.uid!))
+              ElevatedButton(
+                onPressed: () {
+                    Navigator.of(context).pushNamed(AppRoutes.AVALIAR,
+                      arguments: {'producaoid': filme.id});
+                },
+                child: const Center(
+                  child: Text('Adicionar avaliação'),
+                ),
               ),
-            ),
           ],
         ),
       ),

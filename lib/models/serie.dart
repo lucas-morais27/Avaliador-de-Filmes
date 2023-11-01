@@ -14,7 +14,7 @@ class Serie extends Producao {
       required String sinopse,
       required String posterUrl,
       required String anoLancamento,
-      required List<Avaliacao>? avaliacoes,
+      required List<Avaliacao> avaliacoes,
       required this.numeroEpisodios,
       required this.numeroTemporadas,
       required this.criador})

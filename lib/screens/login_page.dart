@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:und1_mobile/models/lista_avaliacoes.dart';
 import 'package:und1_mobile/models/producao_model.dart';
 import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
+import '../models/avaliacao_model.dart';
 import '../styles.dart';
 
 class LoginPage extends StatefulWidget {
@@ -50,6 +52,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     var cores = Theme.of(context).colorScheme;
+
+    var listaAvaliacoes = context.watch<ListaAvaliacoes>();
     //var producoes = Provider.of(context).watch<ProducaoModel>();
     ButtonStyle _buttonStyle = ButtonStyle(
       padding: const MaterialStatePropertyAll<EdgeInsets>(
@@ -156,7 +160,12 @@ class _LoginPageState extends State<LoginPage> {
 
                             // Passei o usuário pra frente, vai que precisa em outro lugar
                             Map<String, List<dynamic>> listas = await Usuario.carregarListas();
-                            Navigator.of(context).pushReplacementNamed(AppRoutes.HOME, arguments: listas);
+                            List<Avaliacao> avaliacoes = await Avaliacao.carregarAvaliacoes();
+                            listaAvaliacoes.avaliacoes = avaliacoes;
+                            Map<String, dynamic> argument = {
+                              'listas': listas
+                            };
+                            Navigator.of(context).pushReplacementNamed(AppRoutes.HOME, arguments: argument);
                           }
                         } catch (e) {
                           _showLoginErrorDialog(context);

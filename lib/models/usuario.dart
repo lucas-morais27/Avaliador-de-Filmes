@@ -179,5 +179,16 @@ class Usuario {
       'curtidas': [],
     };
   }
+
+  static Future<String> emailDoUsuario(String id) async {
+    var db = FirebaseFirestore.instance;
+    Map<String, dynamic>? data;
+    var userData = await db.collection('users').doc(id).get().then(
+        (DocumentSnapshot doc) {
+          data = doc.data() as Map<String, dynamic>;
+        },);
+    return data?['email'];
+  }
+
   }
 
