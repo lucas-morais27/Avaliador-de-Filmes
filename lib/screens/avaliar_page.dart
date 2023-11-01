@@ -16,16 +16,14 @@ class Avaliar extends StatefulWidget {
 }
 
 class _AvaliarState extends State<Avaliar> {
-
   double? _rating;
   double _initialRating = 1.0;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     //_rating = _initialRating;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,72 +57,71 @@ class _AvaliarState extends State<Avaliar> {
             ),
         ],
       ),
-      body: Center(
-        child: Form(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(width: 8),
-                    RatingBar.builder(
-                      maxRating: 5,
-                      initialRating: _initialRating,
-                      minRating: 0,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemSize: 40.0,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Form(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(width: 8),
+                      RatingBar.builder(
+                        maxRating: 5,
+                        initialRating: _initialRating,
+                        minRating: 0,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemSize: 40.0,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (ratingValue) {
+                          setState(() {
+                            _rating = ratingValue;
+                          });
+                        },
                       ),
-                      onRatingUpdate: (ratingValue) {
-                        setState(() {
-                          _rating = ratingValue;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15),
-                child: TextFormField(
-                  controller: _comentarioController,
-                  decoration: InputDecoration(
-                    labelText: 'Comentário',
+                    ],
                   ),
-                  maxLines: 5,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-                child: SizedBox(
-                  width: 200,
-                  child: BotaoPadrao(
-                    onPressed: ()  {
-                      if(_rating == null){
-                        double? notaCarregada = double.tryParse(avaliacao!.nota);
-                        if (notaCarregada != null) {
-                          _rating = notaCarregada!;
-                        } else {
-                          _rating = _initialRating;
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: TextFormField(
+                    controller: _comentarioController,
+                    decoration: InputDecoration(
+                      labelText: 'Comentário',
+                    ),
+                    maxLines: 5,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                  child: SizedBox(
+                    width: 200,
+                    child: BotaoPadrao(
+                      onPressed: () {
+                        if (_rating == null) {
+                          double? notaCarregada =
+                              double.tryParse(avaliacao!.nota);
+                          if (notaCarregada != null) {
+                            _rating = notaCarregada!;
+                          } else {
+                            _rating = _initialRating;
+                          }
                         }
-                      }
-                      if (avaliacao == null)
-                        {
+                        if (avaliacao == null) {
                           avaliacoes.adicionar(Avaliacao(
                               producaoid: producaoid,
                               userid: Usuario.uid!,
                               nota: _rating.toString(),
                               comentario: _comentarioController.text));
-                        }
-                      else
-                        {
+                        } else {
                           avaliacoes.editar(Avaliacao.id(
                               id: avaliacao.id,
                               producaoid: producaoid,
@@ -132,15 +129,14 @@ class _AvaliarState extends State<Avaliar> {
                               nota: _rating.toString(),
                               comentario: _comentarioController.text));
                         }
-                      Navigator.of(context).pop();
-                    },
-                    texto: avaliacao == null
-                        ? 'Adicionar'
-                        : 'Editar',
+                        Navigator.of(context).pop();
+                      },
+                      texto: avaliacao == null ? 'Adicionar' : 'Editar',
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

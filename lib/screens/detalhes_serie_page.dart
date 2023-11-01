@@ -230,7 +230,7 @@ class DetalhesSerie extends StatelessWidget {
                                 5,
                                 (starIndex) => Icon(
                                   Icons.star,
-                                  color: starIndex < int.parse(avaliacao.nota)
+                                  color: starIndex < double.parse(avaliacao.nota)
                                       ? Colors.orange
                                       : Colors.grey,
                                 ),
