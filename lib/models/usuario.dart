@@ -4,26 +4,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:und1_mobile/mocks/mock_filme.dart';
 
 import '../mocks/mock_serie.dart';
+import 'producao_model.dart';
 
 class Usuario {
   String email;
   String senha;
 
-  String? uid;
+  static String? uid;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
 
-  Usuario({required this.email, required this.senha, this.uid});
+  Usuario({required this.email, required this.senha});
 
-  // String? get uid => _uid;
-  // set uid(String? uid) => _uid = uid;
 
-  Future<String> salvarUsuario() {
+  static signOut() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    
+    await auth.signOut();
+    uid = null;
+  }
+
+  Future<String> salvarUsuario() async{
     if (uid == null) {
-      return _cadastrarUsuario();
+      return await _cadastrarUsuario();
     } else {
       //TODO _atualizarUsuario();
-      return 'Não foi possível atualizar o usuário' as Future<String>;
+      return 'Não foi possível atualizar o usuário';
     }
   }
 
@@ -75,7 +81,8 @@ class Usuario {
       String userId = firebaseUser.uid;
 
       // Preencha o objeto Usuario com os dados do Firebase
-      Usuario usuario = Usuario(email: userEmail, senha: senha, uid: userId);
+      Usuario usuario = Usuario(email: userEmail, senha: senha);
+      Usuario.uid = userId;
       return usuario;
     } else {
       return null;
@@ -124,4 +131,53 @@ class Usuario {
       return 'Erro ao atualizar email/senha: $e';
     }
   }
-}
+
+  static Future<bool> atualizarListas(Map<String, List<dynamic>> listas) async{
+    if(uid != null){
+      var db = FirebaseFirestore.instance;
+      final usuarioRef = db.collection('users').doc(uid);
+      usuarioRef.update({
+        "naoAvaliados": listas['naoAvaliados']?.map((e) => e.id),
+        "curtidos": listas['curtidos']?.map((e) => e.id),
+        "naoCurtidos": listas['naoCurtidos']?.map((e) => e.id)
+      }
+      );
+
+      return true;
+    }
+    return false;
+  }
+
+  static Future<Map<String,List<dynamic>>> carregarListas() async {
+
+    var db = FirebaseFirestore.instance;
+
+    if(uid != null) {
+
+      final userData = db.collection("users").doc(Usuario.uid);
+      Map<String, dynamic>? data;
+      await userData.get().then(
+        (DocumentSnapshot doc) {
+          data = doc.data() as Map<String, dynamic>;
+        },
+      );
+      List<dynamic> producoes = [];
+      producoes.addAll(SERIES);
+      producoes.addAll(FILMES);
+      var producoesNaoAvaliadas = data?['naoAvaliados'];
+      var producoesNaoCurtidas = data?['naoCurtidos'];
+      var producoesCurtidas = data?['curtidos'];
+      return {
+        'naoAvaliados': producoes.where((element) => producoesNaoAvaliadas.contains(element.id)).toList(),
+        'naoCurtidos': producoes.where((element) => producoesNaoCurtidas.contains(element.id)).toList(),
+        'curtidos': producoes.where((element) => producoesCurtidas.contains(element.id)).toList(),
+      };
+    }    
+    return {
+      'naoAvaliados': [],
+      'naoCurtidos': [],
+      'curtidas': [],
+    };
+  }
+  }
+
