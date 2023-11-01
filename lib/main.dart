@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:und1_mobile/screens/avaliar_page.dart';
 import 'package:und1_mobile/screens/detalhes_filme_page.dart';
 import 'package:und1_mobile/screens/detalhes_serie_page.dart';
 import 'package:und1_mobile/screens/incial_page.dart';
@@ -49,7 +50,8 @@ class _MainAppState extends State<MainApp> {
         AppRoutes.DETALHES_SERIE: (context) => const DetalhesSerie(),
         AppRoutes.LOGIN: (context) => const LoginPage(),
         AppRoutes.CADASTRO: (context) => const CadastroPage(),
-        AppRoutes.CONFIGURACOES: (context) => const SettingPage()
+        AppRoutes.AVALIAR:(context) => const Avaliar(),
+        AppRoutes.CONFIGURACOES: (context) => const SettingPage(),
       },
     );
   }

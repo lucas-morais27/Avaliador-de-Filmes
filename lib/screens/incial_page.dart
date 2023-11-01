@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:und1_mobile/models/avaliacao_model.dart';
+import 'package:und1_mobile/models/lista_avaliacao.dart';
 import 'package:und1_mobile/models/producao_model.dart';
 import 'package:und1_mobile/screens/menu_navegacao_page.dart';
 
@@ -14,8 +16,17 @@ class PaginaInicial extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (context) => ProducaoModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ListaAvaliacoes(),
+          
+        ),
+         ChangeNotifierProvider(
           create: (context) => ProducaoModel(listas),
-        )
+    
+        ),
+        
       ],
       child: const MenuNavegacao(),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../mocks/mock_avaliacao.dart';
-import '../models/avaliacao.dart';
+import 'package:und1_mobile/screens/avaliar_page.dart';
+import 'package:und1_mobile/utils/app_routes.dart';
+import '../models/avaliacao_model.dart';
 import '../models/serie.dart';
 
 class DetalhesSerie extends StatelessWidget {
@@ -11,10 +12,7 @@ class DetalhesSerie extends StatelessWidget {
     var serie = ModalRoute.of(context)?.settings.arguments as Serie;
     final ColorScheme cores = Theme.of(context).colorScheme;
 
-    List<Avaliacao> listaAvaliacoes = [
-      mockAvaliacao1,
-      mockAvaliacao2,
-    ];
+    List<Avaliacao> listaAvaliacoes = [];
     serie.avaliacoes = listaAvaliacoes;
 
     return Scaffold(
@@ -197,7 +195,7 @@ class DetalhesSerie extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            '${avaliacao.usuario}:',
+                            '${avaliacao.userid}:',
                             style: TextStyle(
                               color: cores.onSecondary,
                               fontWeight: FontWeight.bold,
@@ -229,6 +227,14 @@ class DetalhesSerie extends StatelessWidget {
                   );
                 },
               ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.AVALIAR);
+              },
+              child: Center(
+                child: Text('Adicionar avaliação'),
+              ),
+            ),
           ],
         ),
       ),

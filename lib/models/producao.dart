@@ -1,4 +1,4 @@
-import 'avaliacao.dart';
+import 'avaliacao_model.dart';
 
 class Producao {
   final String id;

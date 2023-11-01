@@ -34,6 +34,7 @@ class ProducaoModel extends ChangeNotifier {
     listas['curtidos'] != null
     ? _curtidos = listas['curtidos']!
     : _curtidos = [];
+
   }
 
   List<dynamic> get curtidos => _curtidos;
@@ -47,13 +48,14 @@ class ProducaoModel extends ChangeNotifier {
   set naoCurtidos (List<dynamic> naoCurtidos) => _naoCurtidos = naoCurtidos;  
 
   proximoCard() {
-    if(_cardAtual+1 == _naoAvaliados.length){
+    if (_cardAtual + 1 == _naoAvaliados.length) {
       _cardAtual = 0;
     } else {
       _cardAtual++;
     }
     notifyListeners();
   }
+
 
   naoGostei() async  {
       var index = _cardAtual;
@@ -78,6 +80,7 @@ class ProducaoModel extends ChangeNotifier {
       }
       _atualizarListas();
       notifyListeners();
+
   }
 
   removerCurtido(int index) {
@@ -102,3 +105,4 @@ class ProducaoModel extends ChangeNotifier {
     });
   }
 }
+
