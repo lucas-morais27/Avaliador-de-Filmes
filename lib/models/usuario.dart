@@ -24,6 +24,19 @@ class Usuario {
     uid = null;
   }
 
+  static deleteAccount() async {
+    final db = FirebaseFirestore.instance;
+
+    if(FirebaseAuth.instance.currentUser != null) {
+      await FirebaseAuth.instance.currentUser?.delete();
+    }
+
+    // await db.collection("users").doc(Usuario.uid).delete().then(
+    //   (doc) => print("Document deleted"),
+    // );
+    uid = null;
+  }
+
   Future<String> salvarUsuario() async{
     if (uid == null) {
       return await _cadastrarUsuario();
