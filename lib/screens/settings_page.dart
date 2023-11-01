@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:und1_mobile/components/modal_confirmacao.dart';
 import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
@@ -15,10 +16,14 @@ class SettingPage extends StatelessWidget {
     final ColorScheme cores = Theme.of(context).colorScheme;
     final FirebaseAuth auth = FirebaseAuth.instance;  
 
-    logOut() {
-      Usuario.signOut();
+    logOut() async {
+      await Usuario.signOut();
       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.LOGIN, ModalRoute.withName('/'));
+    }
 
+    deletarConta() async {
+      await Usuario.deleteAccount();
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.LOGIN, ModalRoute.withName('/'));
     }
     
 
@@ -84,7 +89,20 @@ class SettingPage extends StatelessWidget {
                 SizedBox(height: 20,),
                 ElevatedButton(
                   onPressed: () => {
-                    
+                    showDialog(
+                      context: context, 
+                      builder: (BuildContext context) {
+                          return ModalConfirmacao(
+                            title: "Apagar Conta",
+                            content:
+                                "Você realmente deseja apagar a sua conta?",
+                            onConfirmed: (resposta) {
+                              if (resposta) {
+                                deletarConta();
+                              }
+                            },
+                          );
+                        })
                   },
                   style: _buttonStyle, 
                   child: const Row(children: [
