@@ -19,11 +19,13 @@ class SettingPage extends StatelessWidget {
     logOut() async {
       await Usuario.signOut();
       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.LOGIN, ModalRoute.withName('/'));
+
     }
 
     deletarConta() async {
       await Usuario.deleteAccount();
       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.LOGIN, ModalRoute.withName('/'));
+
     }
     
 

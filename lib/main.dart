@@ -1,9 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:und1_mobile/models/lista_avaliacoes.dart';
+import 'package:und1_mobile/screens/avaliar_page.dart';
 import 'package:und1_mobile/screens/detalhes_filme_page.dart';
 import 'package:und1_mobile/screens/detalhes_serie_page.dart';
-import 'package:und1_mobile/screens/incial_page.dart';
+import 'package:und1_mobile/screens/inicial_page.dart';
 import 'package:und1_mobile/screens/login_page.dart';
 import 'package:und1_mobile/screens/settings_page.dart';
 import 'package:und1_mobile/styles.dart';
@@ -35,7 +38,13 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(
+          create: (context) => ListaAvaliacoes(),
+        ),
+    ],
+    child: MaterialApp(
       theme: ThemeData(
         fontFamily: GoogleFonts.poppins().fontFamily,
       ).copyWith(
@@ -49,8 +58,9 @@ class _MainAppState extends State<MainApp> {
         AppRoutes.DETALHES_SERIE: (context) => const DetalhesSerie(),
         AppRoutes.LOGIN: (context) => const LoginPage(),
         AppRoutes.CADASTRO: (context) => const CadastroPage(),
-        AppRoutes.CONFIGURACOES: (context) => const SettingPage()
+        AppRoutes.AVALIAR:(context) => const Avaliar(),
+        AppRoutes.CONFIGURACOES: (context) => const SettingPage(),
       },
-    );
+    ));
   }
 }

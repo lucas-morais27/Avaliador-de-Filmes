@@ -12,7 +12,7 @@ List<Serie> SERIES = [
     anoLancamento: "2011",
     numeroEpisodios: "73",
     numeroTemporadas: "8",
-    avaliacoes: null,
+    avaliacoes: [],
   ),
   Serie(
       id: "114461",

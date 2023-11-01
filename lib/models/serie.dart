@@ -1,5 +1,5 @@
 import 'producao.dart';
-import 'avaliacao.dart';
+import 'avaliacao_model.dart';
 
 class Serie extends Producao {
   final String criador;
@@ -14,7 +14,7 @@ class Serie extends Producao {
       required String sinopse,
       required String posterUrl,
       required String anoLancamento,
-      required List<Avaliacao>? avaliacoes,
+      required List<Avaliacao> avaliacoes,
       required this.numeroEpisodios,
       required this.numeroTemporadas,
       required this.criador})
