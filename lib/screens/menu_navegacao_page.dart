@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:und1_mobile/screens/filmes_nao_avaliados_page.dart';
 import 'package:und1_mobile/styles.dart';
+import 'package:und1_mobile/utils/app_routes.dart';
 
 import 'curtidos_page.dart';
 import 'nao_curtidos_page.dart';
@@ -60,7 +61,9 @@ class _MenuNavegacaoState extends State<MenuNavegacao> {
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                      Navigator.of(context).pushNamed(AppRoutes.CONFIGURACOES);
+                },
                 child: const Icon(
                   Icons.settings,
                   size: 26.0,

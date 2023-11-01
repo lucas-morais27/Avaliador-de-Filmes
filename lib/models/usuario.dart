@@ -16,7 +16,13 @@ class Usuario {
 
   Usuario({required this.email, required this.senha});
 
-  
+
+  static signOut() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    
+    await auth.signOut();
+    uid = null;
+  }
 
   Future<String> salvarUsuario() async{
     if (uid == null) {
