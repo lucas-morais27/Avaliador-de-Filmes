@@ -65,6 +65,7 @@ class ProducaoModel extends ChangeNotifier {
       if(_cardAtual >= _naoAvaliados.length){
         _cardAtual = 0;
       }
+      _atualizarListas();
       notifyListeners();
   }
 
@@ -75,18 +76,29 @@ class ProducaoModel extends ChangeNotifier {
       if(_cardAtual >= _naoAvaliados.length){
         _cardAtual = 0;
       }
+      _atualizarListas();
       notifyListeners();
   }
 
   removerCurtido(int index) {
     naoAvaliados.add(curtidos[index]);
     curtidos.removeAt(index);
+    _atualizarListas();
     notifyListeners();
   }
 
   removerNaoCurtido(int index) {
       naoAvaliados.add(naoCurtidos[index]);
       naoCurtidos.removeAt(index);
+      _atualizarListas();
       notifyListeners();
+  }
+
+  _atualizarListas(){
+    Usuario.atualizarListas({
+      'naoAvaliados': _naoAvaliados,
+      'naoCurtidos': _naoCurtidos,
+      'curtidos': _curtidos
+    });
   }
 }

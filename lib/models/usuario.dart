@@ -126,7 +126,23 @@ class Usuario {
     }
   }
 
-  static Future<List<dynamic>> carregarListaNaoAvaliados() async {
+  static Future<bool> atualizarListas(Map<String, List<dynamic>> listas) async{
+    if(uid != null){
+      var db = FirebaseFirestore.instance;
+      final usuarioRef = db.collection('users').doc(uid);
+      usuarioRef.update({
+        "naoAvaliados": listas['naoAvaliados']?.map((e) => e.id),
+        "curtidos": listas['curtidos']?.map((e) => e.id),
+        "naoCurtidos": listas['naoCurtidos']?.map((e) => e.id)
+      }
+      );
+
+      return true;
+    }
+    return false;
+  }
+
+  static Future<Map<String,List<dynamic>>> carregarListas() async {
 
     var db = FirebaseFirestore.instance;
 
@@ -142,9 +158,20 @@ class Usuario {
       List<dynamic> producoes = [];
       producoes.addAll(SERIES);
       producoes.addAll(FILMES);
-      var producoesCarregadas = data?['naoAvaliados'];
-      return producoes.where((element) => producoesCarregadas.contains(element.id)).toList();
+      var producoesNaoAvaliadas = data?['naoAvaliados'];
+      var producoesNaoCurtidas = data?['naoCurtidos'];
+      var producoesCurtidas = data?['curtidos'];
+      return {
+        'naoAvaliados': producoes.where((element) => producoesNaoAvaliadas.contains(element.id)).toList(),
+        'naoCurtidos': producoes.where((element) => producoesNaoCurtidas.contains(element.id)).toList(),
+        'curtidos': producoes.where((element) => producoesCurtidas.contains(element.id)).toList(),
+      };
     }    
-    return [];
+    return {
+      'naoAvaliados': [],
+      'naoCurtidos': [],
+      'curtidas': [],
+    };
   }
-}
+  }
+
