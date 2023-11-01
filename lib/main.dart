@@ -6,6 +6,7 @@ import 'package:und1_mobile/screens/detalhes_filme_page.dart';
 import 'package:und1_mobile/screens/detalhes_serie_page.dart';
 import 'package:und1_mobile/screens/incial_page.dart';
 import 'package:und1_mobile/screens/login_page.dart';
+import 'package:und1_mobile/screens/settings_page.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
@@ -50,6 +51,7 @@ class _MainAppState extends State<MainApp> {
         AppRoutes.LOGIN: (context) => const LoginPage(),
         AppRoutes.CADASTRO: (context) => const CadastroPage(),
         AppRoutes.AVALIAR:(context) => const Avaliar(),
+        AppRoutes.CONFIGURACOES: (context) => const SettingPage(),
       },
     );
   }

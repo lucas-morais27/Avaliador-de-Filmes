@@ -105,8 +105,7 @@ class _CadastroPageState extends State<CadastroPage> {
                                       : Colors.red;
                                   if (result.isEmpty) {
                                     result = 'Usuário cadastrado com sucesso.';
-                                    Navigator.of(context)
-                                        .pushReplacementNamed(AppRoutes.HOME);
+                                    Navigator.of(context).pop();
                                   }
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(

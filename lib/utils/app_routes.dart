@@ -7,4 +7,5 @@ class AppRoutes {
   static const LOGIN = '/';
   static const CADASTRO = '/cadastro';
   static const AVALIAR = '/avaliar';
+  static const CONFIGURACOES = '/configuracoes';
 }
