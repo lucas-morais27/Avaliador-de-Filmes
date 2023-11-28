@@ -14,6 +14,7 @@ class BotaoPadrao extends StatelessWidget {
     required this.onPressed,
     this.cor,
   });
+
   const BotaoPadrao.icone({
     super.key,
     this.texto,
@@ -45,7 +46,7 @@ class BotaoPadrao extends StatelessWidget {
             Text(
               texto!,
               style: estiloSubTitulo3.copyWith(color: cores.onPrimaryContainer),
-            )
+            ),
         ],
       ),
     );

@@ -16,7 +16,9 @@ class _NaoCurtidosPageState extends State<NaoCurtidosPage> {
   Widget build(BuildContext context) {
     var producoes = context.watch<ProducaoModel>();
 
-    return ListaProducao(producoes.removerNaoCurtido,
-        listaProducoes: producoes.naoCurtidos);
+    return ListaProducao(
+      producoes.removerNaoCurtido,
+      listaProducoes: producoes.naoCurtidos,
+    );
   }
 }

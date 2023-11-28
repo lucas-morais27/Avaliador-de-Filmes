@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:und1_mobile/models/avaliacao_model.dart';
 import 'package:und1_mobile/models/lista_avaliacoes.dart';
 import 'package:und1_mobile/models/usuario.dart';
-import 'package:und1_mobile/screens/avaliar_page.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
 import '../models/filme.dart';
@@ -52,66 +50,68 @@ class DetalhesFilmePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Flexible(
-                    flex: 2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: Colors.white30, // Cor da borda
-                          width: 2.0, // Largura da borda
-                        ),
+                  flex: 2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Colors.white30, // Cor da borda
+                        width: 2.0, // Largura da borda
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image(
-                          image: Image.network(filme.posterUrl).image,
-                          //height: 270,
-                          fit: BoxFit.fill,
-                          // width: double.infinity,
-                        ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image(
+                        image: Image.network(filme.posterUrl).image,
+                        //height: 270,
+                        fit: BoxFit.fill,
+                        // width: double.infinity,
                       ),
-                    )),
+                    ),
+                  ),
+                ),
                 const Expanded(child: SizedBox()),
                 Flexible(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          filme.diretor,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: cores.onSecondary,
-                          ),
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        filme.diretor,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: cores.onSecondary,
                         ),
-                        Text(
-                          "Diretor ",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: cores.onSecondary,
-                          ),
+                      ),
+                      Text(
+                        "Diretor ",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: cores.onSecondary,
                         ),
-                        const SizedBox(
-                          height: 32,
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Text(
+                        filme.anoLancamento,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: cores.onSecondary,
+                          fontWeight: FontWeight.bold,
                         ),
-                        Text(
-                          filme.anoLancamento,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: cores.onSecondary,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      ),
+                      Text(
+                        "Lançamento ",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: cores.onSecondary,
                         ),
-                        Text(
-                          "Lançamento ",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: cores.onSecondary,
-                          ),
-                        ),
-                      ],
-                    ))
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
             const SizedBox(
@@ -150,11 +150,12 @@ class DetalhesFilmePage extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
+            // ignore: unnecessary_null_comparison
             if (filme.avaliacoes != null)
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: filme.avaliacoes!.length,
+                itemCount: filme.avaliacoes.length,
                 itemBuilder: (context, index) {
                   final avaliacao = filme.avaliacoes[index];
                   return Column(
@@ -187,7 +188,7 @@ class DetalhesFilmePage extends StatelessWidget {
                                     ),
                                   );
                                 } else {
-                                  return CircularProgressIndicator();
+                                  return const CircularProgressIndicator();
                                 }
                               },
                             ),
@@ -219,10 +220,10 @@ class DetalhesFilmePage extends StatelessWidget {
                   );
                 },
               ),
-            if(!lista.jaAvaliou(filme.id, Usuario.uid!))
+            if (!lista.jaAvaliou(filme.id, Usuario.uid!))
               ElevatedButton(
                 onPressed: () {
-                    Navigator.of(context).pushNamed(AppRoutes.AVALIAR,
+                  Navigator.of(context).pushNamed(AppRoutes.AVALIAR,
                       arguments: {'producaoid': filme.id});
                 },
                 child: const Center(

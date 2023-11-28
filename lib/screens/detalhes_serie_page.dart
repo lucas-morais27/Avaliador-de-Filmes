@@ -183,11 +183,12 @@ class DetalhesSerie extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
+            // ignore: unnecessary_null_comparison
             if (serie.avaliacoes != null)
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: serie.avaliacoes!.length,
+                itemCount: serie.avaliacoes.length,
                 itemBuilder: (context, index) {
                   final avaliacao = serie.avaliacoes[index];
                   return Column(
@@ -220,7 +221,7 @@ class DetalhesSerie extends StatelessWidget {
                                     ),
                                   );
                                 } else {
-                                  return CircularProgressIndicator();
+                                  return const CircularProgressIndicator();
                                 }
                               },
                             ),
@@ -230,9 +231,10 @@ class DetalhesSerie extends StatelessWidget {
                                 5,
                                 (starIndex) => Icon(
                                   Icons.star,
-                                  color: starIndex < double.parse(avaliacao.nota)
-                                      ? Colors.orange
-                                      : Colors.grey,
+                                  color:
+                                      starIndex < double.parse(avaliacao.nota)
+                                          ? Colors.orange
+                                          : Colors.grey,
                                 ),
                               ),
                             ),
@@ -251,16 +253,16 @@ class DetalhesSerie extends StatelessWidget {
                   );
                 },
               ),
-              if(!lista.jaAvaliou(serie.id, Usuario.uid!))
-                ElevatedButton(
-                  onPressed: () {
-                      Navigator.of(context).pushNamed(AppRoutes.AVALIAR,
-                        arguments: {'producaoid': serie.id});
-                  },
-                  child: Center(
-                    child: Text('Adicionar avaliação'),
-                  ),
+            if (!lista.jaAvaliou(serie.id, Usuario.uid!))
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AppRoutes.AVALIAR,
+                      arguments: {'producaoid': serie.id});
+                },
+                child: const Center(
+                  child: Text('Adicionar avaliação'),
                 ),
+              ),
           ],
         ),
       ),

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -26,19 +28,20 @@ class ItemProducao extends StatefulWidget {
 class _ItemProducaoState extends State<ItemProducao> {
   void _deletarProducao() {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return ModalConfirmacao(
-            title: "Remover ${widget.producao.titulo}",
-            content:
-                "Você realmente deseja remover ${widget.producao.titulo} da lista?",
-            onConfirmed: (resposta) {
-              if (resposta) {
-                widget.remover(widget.index);
-              }
-            },
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return ModalConfirmacao(
+          title: "Remover ${widget.producao.titulo}",
+          content:
+              "Você realmente deseja remover ${widget.producao.titulo} da lista?",
+          onConfirmed: (resposta) {
+            if (resposta) {
+              widget.remover(widget.index);
+            }
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -79,11 +82,12 @@ class _ItemProducaoState extends State<ItemProducao> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Flexible(
-                  flex: 3,
-                  child: Image.network(
-                    widget.producao.posterUrl,
-                    fit: BoxFit.fill,
-                  )),
+                flex: 3,
+                child: Image.network(
+                  widget.producao.posterUrl,
+                  fit: BoxFit.fill,
+                ),
+              ),
               const Expanded(child: SizedBox()),
               Flexible(
                 flex: 8,

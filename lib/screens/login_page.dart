@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:und1_mobile/models/lista_avaliacoes.dart';
-import 'package:und1_mobile/models/producao_model.dart';
 import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
@@ -55,23 +54,14 @@ class _LoginPageState extends State<LoginPage> {
 
     var listaAvaliacoes = context.watch<ListaAvaliacoes>();
     //var producoes = Provider.of(context).watch<ProducaoModel>();
-    ButtonStyle _buttonStyle = ButtonStyle(
-      padding: const MaterialStatePropertyAll<EdgeInsets>(
-          EdgeInsets.all(12)),
-      shape: MaterialStatePropertyAll<
-          RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-              borderRadius:
-              BorderRadius.circular(32))),
-      backgroundColor:
-      MaterialStatePropertyAll<Color>(
-          cores.primaryContainer),
+    ButtonStyle buttonStyle = ButtonStyle(
+      padding: const MaterialStatePropertyAll<EdgeInsets>(EdgeInsets.all(12)),
+      shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(32))),
+      backgroundColor: MaterialStatePropertyAll<Color>(cores.primaryContainer),
       foregroundColor:
-      MaterialStatePropertyAll<Color>(
-          cores.onPrimaryContainer),
-      textStyle:
-      const MaterialStatePropertyAll<TextStyle>(
-          estiloSubTitulo3),
+          MaterialStatePropertyAll<Color>(cores.onPrimaryContainer),
+      textStyle: const MaterialStatePropertyAll<TextStyle>(estiloSubTitulo3),
     );
 
     return Scaffold(
@@ -145,43 +135,53 @@ class _LoginPageState extends State<LoginPage> {
                               : const Icon(Icons.visibility_off),
                         )),
                   ),
-                  const Expanded(child: SizedBox(height: 16,)),
+                  const Expanded(
+                      child: SizedBox(
+                    height: 16,
+                  )),
                   ElevatedButton(
                       onPressed: () async {
                         String email = _usuarioController.text;
                         String senha = _senhaController.text;
 
                         try {
-                          Usuario? usuarioLogado = await Usuario.login(email, senha);
+                          Usuario? usuarioLogado =
+                              await Usuario.login(email, senha);
                           if (usuarioLogado != null) {
                             if (!context.mounted) {
                               return;
                             }
 
                             // Passei o usuário pra frente, vai que precisa em outro lugar
-                            Map<String, List<dynamic>> listas = await Usuario.carregarListas();
-                            List<Avaliacao> avaliacoes = await Avaliacao.carregarAvaliacoes();
+                            Map<String, List<dynamic>> listas =
+                                await Usuario.carregarListas();
+                            List<Avaliacao> avaliacoes =
+                                await Avaliacao.carregarAvaliacoes();
                             listaAvaliacoes.avaliacoes = avaliacoes;
-                            Map<String, dynamic> argument = {
-                              'listas': listas
-                            };
-                            Navigator.of(context).pushReplacementNamed(AppRoutes.HOME, arguments: argument);
+                            Map<String, dynamic> argument = {'listas': listas};
+                            if (context.mounted) {
+                              Navigator.of(context).pushReplacementNamed(
+                                AppRoutes.HOME,
+                                arguments: argument,
+                              );
+                            }
                           }
                         } catch (e) {
                           _showLoginErrorDialog(context);
                         }
                       },
+                      style: buttonStyle,
                       child: const Text(
                         'Entrar',
-                      ),
-                      style: _buttonStyle
+                      )),
+                  const SizedBox(
+                    height: 16,
                   ),
-                  SizedBox(height: 16,),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed(AppRoutes.CADASTRO);
                     },
-                    style: _buttonStyle,
+                    style: buttonStyle,
                     child: const Text(
                       'Cadastre-se',
                     ),

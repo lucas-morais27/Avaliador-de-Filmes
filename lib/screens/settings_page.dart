@@ -1,51 +1,54 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:und1_mobile/components/modal_confirmacao.dart';
 import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
-import 'login_page.dart';
 
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     final ColorScheme cores = Theme.of(context).colorScheme;
-    final FirebaseAuth auth = FirebaseAuth.instance;  
+    final FirebaseAuth auth = FirebaseAuth.instance;
 
     logOut() async {
       await Usuario.signOut();
-      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.LOGIN, ModalRoute.withName('/'));
-
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.LOGIN,
+        ModalRoute.withName('/'),
+      );
     }
 
     deletarConta() async {
       await Usuario.deleteAccount();
-      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.LOGIN, ModalRoute.withName('/'));
-
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.LOGIN,
+        ModalRoute.withName('/'),
+      );
     }
-    
 
-    ButtonStyle _buttonStyle = ButtonStyle(
-      padding: const MaterialStatePropertyAll<EdgeInsets>(
-          EdgeInsets.all(12)),
-      shape: MaterialStatePropertyAll<
-          RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-              borderRadius:
-              BorderRadius.circular(32))),
-      backgroundColor:
-      MaterialStatePropertyAll<Color>(
-          cores.primaryContainer),
-      foregroundColor:
-      MaterialStatePropertyAll<Color>(
-          cores.onPrimaryContainer),
-      textStyle:
-      const MaterialStatePropertyAll<TextStyle>(
-          estiloSubTitulo3),
+    ButtonStyle buttonStyle = ButtonStyle(
+      padding: const MaterialStatePropertyAll<EdgeInsets>(EdgeInsets.all(12)),
+      shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
+        ),
+      ),
+      backgroundColor: MaterialStatePropertyAll<Color>(
+        cores.primaryContainer,
+      ),
+      foregroundColor: MaterialStatePropertyAll<Color>(
+        cores.onPrimaryContainer,
+      ),
+      textStyle: const MaterialStatePropertyAll<TextStyle>(
+        estiloSubTitulo3,
+      ),
     );
 
     return Scaffold(
@@ -58,9 +61,7 @@ class SettingPage extends StatelessWidget {
           ),
         ),
         leading: GestureDetector(
-          onTap: () => {
-            Navigator.pop(context)
-          },
+          onTap: () => {Navigator.pop(context)},
           child: const Icon(
             Icons.arrow_back,
           ),
@@ -68,60 +69,60 @@ class SettingPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Container(
             margin: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
               children: [
                 ElevatedButton(
-                  onPressed: () => {
-                    logOut()
-                  },
-                  style: _buttonStyle, 
-                  child: const Row(children: [
-                    Icon(
-                      Icons.exit_to_app
-                    ),
-                    Text(
-                      'Sair',
-                    )
-                  ],
-                  )
+                  onPressed: () => {logOut()},
+                  style: buttonStyle,
+                  child: const Row(
+                    children: [
+                      Icon(Icons.exit_to_app),
+                      Text(
+                        'Sair',
+                      )
+                    ],
                   ),
-                SizedBox(height: 20,),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 ElevatedButton(
                   onPressed: () => {
                     showDialog(
-                      context: context, 
+                      context: context,
                       builder: (BuildContext context) {
-                          return ModalConfirmacao(
-                            title: "Apagar Conta",
-                            content:
-                                "Você realmente deseja apagar a sua conta?",
-                            onConfirmed: (resposta) {
-                              if (resposta) {
-                                deletarConta();
-                              }
-                            },
-                          );
-                        })
-                  },
-                  style: _buttonStyle, 
-                  child: const Row(children: [
-                    Icon(
-                      Icons.delete
-                    ),
-                    Text(
-                      'Excluir conta',
+                        return ModalConfirmacao(
+                          title: "Apagar Conta",
+                          content: "Você realmente deseja apagar a sua conta?",
+                          onConfirmed: (resposta) {
+                            if (resposta) {
+                              deletarConta();
+                            }
+                          },
+                        );
+                      },
                     )
-                  ],
-                  ) 
+                  },
+                  style: buttonStyle,
+                  child: const Row(
+                    children: [
+                      Icon(Icons.delete),
+                      Text(
+                        'Excluir conta',
+                      ),
+                    ],
                   ),
+                ),
               ],
-            )
-          )
+            ),
+          ),
         ],
-      )
+      ),
     );
   }
 }

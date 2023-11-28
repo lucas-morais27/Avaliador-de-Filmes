@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:und1_mobile/mocks/mock_filme.dart';
 
 import '../mocks/mock_serie.dart';
-import 'producao_model.dart';
 
 class Usuario {
   String email;
@@ -16,10 +15,9 @@ class Usuario {
 
   Usuario({required this.email, required this.senha});
 
-
   static signOut() async {
     final FirebaseAuth auth = FirebaseAuth.instance;
-    
+
     await auth.signOut();
     uid = null;
   }
@@ -27,7 +25,7 @@ class Usuario {
   static deleteAccount() async {
     final db = FirebaseFirestore.instance;
 
-    if(FirebaseAuth.instance.currentUser != null) {
+    if (FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.currentUser?.delete();
     }
 
@@ -37,7 +35,7 @@ class Usuario {
     uid = null;
   }
 
-  Future<String> salvarUsuario() async{
+  Future<String> salvarUsuario() async {
     if (uid == null) {
       return await _cadastrarUsuario();
     } else {
@@ -84,16 +82,13 @@ class Usuario {
       password: senha,
     );
 
-    // Se o login for bem-sucedido, preencha um objeto Usuario com os dados obtidos
     User? user = userCredential.user;
 
     if (user != null) {
-      // Recupere os detalhes do usuário do Firebase
       User firebaseUser = FirebaseAuth.instance.currentUser!;
       String userEmail = firebaseUser.email ?? '';
       String userId = firebaseUser.uid;
 
-      // Preencha o objeto Usuario com os dados do Firebase
       Usuario usuario = Usuario(email: userEmail, senha: senha);
       Usuario.uid = userId;
       return usuario;
@@ -145,15 +140,16 @@ class Usuario {
     }
   }
 
-  static Future<bool> atualizarListas(Map<String, List<dynamic>> listas) async{
-    if(uid != null){
+  static Future<bool> atualizarListas(Map<String, List<dynamic>> listas) async {
+    if (uid != null) {
       var db = FirebaseFirestore.instance;
       final usuarioRef = db.collection('users').doc(uid);
-      usuarioRef.update({
-        "naoAvaliados": listas['naoAvaliados']?.map((e) => e.id),
-        "curtidos": listas['curtidos']?.map((e) => e.id),
-        "naoCurtidos": listas['naoCurtidos']?.map((e) => e.id)
-      }
+      usuarioRef.update(
+        {
+          "naoAvaliados": listas['naoAvaliados']?.map((e) => e.id),
+          "curtidos": listas['curtidos']?.map((e) => e.id),
+          "naoCurtidos": listas['naoCurtidos']?.map((e) => e.id)
+        },
       );
 
       return true;
@@ -161,12 +157,10 @@ class Usuario {
     return false;
   }
 
-  static Future<Map<String,List<dynamic>>> carregarListas() async {
-
+  static Future<Map<String, List<dynamic>>> carregarListas() async {
     var db = FirebaseFirestore.instance;
 
-    if(uid != null) {
-
+    if (uid != null) {
       final userData = db.collection("users").doc(Usuario.uid);
       Map<String, dynamic>? data;
       await userData.get().then(
@@ -181,11 +175,17 @@ class Usuario {
       var producoesNaoCurtidas = data?['naoCurtidos'];
       var producoesCurtidas = data?['curtidos'];
       return {
-        'naoAvaliados': producoes.where((element) => producoesNaoAvaliadas.contains(element.id)).toList(),
-        'naoCurtidos': producoes.where((element) => producoesNaoCurtidas.contains(element.id)).toList(),
-        'curtidos': producoes.where((element) => producoesCurtidas.contains(element.id)).toList(),
+        'naoAvaliados': producoes
+            .where((element) => producoesNaoAvaliadas.contains(element.id))
+            .toList(),
+        'naoCurtidos': producoes
+            .where((element) => producoesNaoCurtidas.contains(element.id))
+            .toList(),
+        'curtidos': producoes
+            .where((element) => producoesCurtidas.contains(element.id))
+            .toList(),
       };
-    }    
+    }
     return {
       'naoAvaliados': [],
       'naoCurtidos': [],
@@ -197,11 +197,10 @@ class Usuario {
     var db = FirebaseFirestore.instance;
     Map<String, dynamic>? data;
     var userData = await db.collection('users').doc(id).get().then(
-        (DocumentSnapshot doc) {
-          data = doc.data() as Map<String, dynamic>;
-        },);
+      (DocumentSnapshot doc) {
+        data = doc.data() as Map<String, dynamic>;
+      },
+    );
     return data?['email'];
   }
-
-  }
-
+}

@@ -15,7 +15,9 @@ class _CurtidosPageState extends State<CurtidosPage> {
   @override
   Widget build(BuildContext context) {
     var producoes = context.watch<ProducaoModel>();
-    return ListaProducao(producoes.removerCurtido,
-        listaProducoes: producoes.curtidos);
+    return ListaProducao(
+      producoes.removerCurtido,
+      listaProducoes: producoes.curtidos,
+    );
   }
 }

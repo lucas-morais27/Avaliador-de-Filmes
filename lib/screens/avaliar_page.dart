@@ -32,26 +32,25 @@ class _AvaliarState extends State<Avaliar> {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final producaoid = argument['producaoid'];
     Avaliacao? avaliacao = argument['avaliacao'];
-    double nota = 1;
-    TextEditingController _comentarioController = TextEditingController();
+    TextEditingController comentarioController = TextEditingController();
 
     if (avaliacao != null) {
-      _comentarioController.text = avaliacao.comentario!;
+      comentarioController.text = avaliacao.comentario!;
       double? notaCarregada = double.tryParse(avaliacao.nota);
       if (notaCarregada != null) {
-        _initialRating = notaCarregada!;
+        _initialRating = notaCarregada;
       }
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Avaliar Produção'),
+        title: const Text('Avaliar Produção'),
         actions: [
           if (avaliacao != null)
             IconButton(
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
               onPressed: () => {
-                avaliacoes.remover(avaliacao!),
+                avaliacoes.remover(avaliacao),
                 Navigator.of(context).pop(),
               },
             ),
@@ -76,8 +75,9 @@ class _AvaliarState extends State<Avaliar> {
                         allowHalfRating: true,
                         itemCount: 5,
                         itemSize: 40.0,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => Icon(
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => const Icon(
                           Icons.star,
                           color: Colors.amber,
                         ),
@@ -93,8 +93,8 @@ class _AvaliarState extends State<Avaliar> {
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: TextFormField(
-                    controller: _comentarioController,
-                    decoration: InputDecoration(
+                    controller: comentarioController,
+                    decoration: const InputDecoration(
                       labelText: 'Comentário',
                     ),
                     maxLines: 5,
@@ -110,7 +110,7 @@ class _AvaliarState extends State<Avaliar> {
                           double? notaCarregada =
                               double.tryParse(avaliacao!.nota);
                           if (notaCarregada != null) {
-                            _rating = notaCarregada!;
+                            _rating = notaCarregada;
                           } else {
                             _rating = _initialRating;
                           }
@@ -120,14 +120,14 @@ class _AvaliarState extends State<Avaliar> {
                               producaoid: producaoid,
                               userid: Usuario.uid!,
                               nota: _rating.toString(),
-                              comentario: _comentarioController.text));
+                              comentario: comentarioController.text));
                         } else {
                           avaliacoes.editar(Avaliacao.id(
                               id: avaliacao.id,
                               producaoid: producaoid,
                               userid: Usuario.uid!,
                               nota: _rating.toString(),
-                              comentario: _comentarioController.text));
+                              comentario: comentarioController.text));
                         }
                         Navigator.of(context).pop();
                       },

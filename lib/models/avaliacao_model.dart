@@ -1,7 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:und1_mobile/models/producao_model.dart';
 
 class Avaliacao {
   String? id;
@@ -11,7 +8,7 @@ class Avaliacao {
   final String? comentario;
 
   final _db = FirebaseFirestore.instance;
-  static final _baseCollection = 'reviews';
+  static const _baseCollection = 'reviews';
 
   Avaliacao({
     required this.producaoid,
@@ -20,15 +17,13 @@ class Avaliacao {
     required this.comentario,
   });
 
-  Avaliacao.id(
-  {
+  Avaliacao.id({
     required this.id,
     required this.producaoid,
     required this.userid,
     required this.nota,
     required this.comentario,
-  }
-  );
+  });
 
   static Avaliacao fromMap(Map<String, dynamic> map) {
     return Avaliacao(
@@ -57,39 +52,40 @@ class Avaliacao {
     );
   }
 
-
   Future<bool> adicionar() async {
-    if(id != null){
+    if (id != null) {
       try {
-      await _db.collection(_baseCollection).doc(id).set({
-        'id': this.id,
-        'producaoid': this.producaoid,
-        'userid': this.userid,
-        'nota': this.nota,
-        'comentario': this.comentario
-      });
-      return true;
-    } catch (e) {
-      return false;
-    }
+        await _db.collection(_baseCollection).doc(id).set(
+          {
+            'id': id,
+            'producaoid': producaoid,
+            'userid': userid,
+            'nota': nota,
+            'comentario': comentario
+          },
+        );
+        return true;
+      } catch (e) {
+        return false;
+      }
     }
     return false;
   }
 
   Future<bool> atualizar() async {
-    if(id!=null){
+    if (id != null) {
       try {
-      await _db.collection(_baseCollection).doc(id).update({
-        'id': this.id,
-        'producaoid': this.producaoid,
-        'userid': this.userid,
-        'nota': this.nota,
-        'comentario': this.comentario
-      });
-      return true;
-    } catch (e) {
-      return false;
-    }
+        await _db.collection(_baseCollection).doc(id).update({
+          'id': id,
+          'producaoid': producaoid,
+          'userid': userid,
+          'nota': nota,
+          'comentario': comentario
+        });
+        return true;
+      } catch (e) {
+        return false;
+      }
     }
     return false;
   }
@@ -103,17 +99,21 @@ class Avaliacao {
       return false;
     }
   }
-  
 
   static Future<List<Avaliacao>> carregarAvaliacoes() async {
     final db = FirebaseFirestore.instance;
     var avaliacoesData = await db.collection(Avaliacao._baseCollection).get();
-    var avaliacoes = avaliacoesData.docs.map((doc) =>  doc.data()).toList();
-    return avaliacoes.map((e) => Avaliacao.id(
-      id: e['id'],
-      producaoid: e['producaoid'], 
-      userid: e['userid'], 
-      nota: e['nota'], 
-      comentario: e['comentario'])).toList();
+    var avaliacoes = avaliacoesData.docs.map((doc) => doc.data()).toList();
+    return avaliacoes
+        .map(
+          (e) => Avaliacao.id(
+            id: e['id'],
+            producaoid: e['producaoid'],
+            userid: e['userid'],
+            nota: e['nota'],
+            comentario: e['comentario'],
+          ),
+        )
+        .toList();
   }
 }
