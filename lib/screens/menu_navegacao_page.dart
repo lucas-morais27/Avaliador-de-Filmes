@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:und1_mobile/models/foto_provider.dart';
 import 'package:und1_mobile/screens/filmes_nao_avaliados_page.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
@@ -46,6 +48,7 @@ class _MenuNavegacaoState extends State<MenuNavegacao> {
 
   @override
   Widget build(BuildContext context) {
+    String? fotoUrl = Provider.of<FotoProvider>(context).fotoUrl;
     final ColorScheme cores = Theme.of(context).colorScheme;
 
     return Scaffold(
@@ -62,12 +65,24 @@ class _MenuNavegacaoState extends State<MenuNavegacao> {
             padding: const EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed(AppRoutes.CONFIGURACOES);
+                Navigator.of(context).pushNamed(AppRoutes.PERFIL);
               },
-              child: const Icon(
-                Icons.settings,
-                size: 26.0,
-              ),
+              child: fotoUrl != null
+                  ? Container(
+                      width: 40.0,
+                      height: 40.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(fotoUrl),
+                        ),
+                      ),
+                    )
+                  : const Icon(
+                      Icons.person,
+                      size: 32.0,
+                    ),
             ),
           ),
         ],

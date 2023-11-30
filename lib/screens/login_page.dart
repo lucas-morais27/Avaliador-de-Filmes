@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:und1_mobile/models/lista_avaliacoes.dart';
@@ -5,6 +6,7 @@ import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
 import '../models/avaliacao_model.dart';
+import '../models/foto_provider.dart';
 import '../styles.dart';
 
 class LoginPage extends StatefulWidget {
@@ -152,6 +154,17 @@ class _LoginPageState extends State<LoginPage> {
                               return;
                             }
 
+                            final storage = FirebaseStorage.instance;
+                            await storage
+                                .ref('images/${Usuario.uid!}.jpg')
+                                .getDownloadURL()
+                                .then((value) {
+                              Provider.of<FotoProvider>(
+                                context,
+                                listen: false,
+                              ).fotoUrl = value;
+                            });
+
                             // Passei o usuário pra frente, vai que precisa em outro lugar
                             Map<String, List<dynamic>> listas =
                                 await Usuario.carregarListas();
@@ -159,6 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                                 await Avaliacao.carregarAvaliacoes();
                             listaAvaliacoes.avaliacoes = avaliacoes;
                             Map<String, dynamic> argument = {'listas': listas};
+
                             if (context.mounted) {
                               Navigator.of(context).pushReplacementNamed(
                                 AppRoutes.HOME,
@@ -189,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
