@@ -8,10 +8,11 @@ import 'package:und1_mobile/screens/detalhes_filme_page.dart';
 import 'package:und1_mobile/screens/detalhes_serie_page.dart';
 import 'package:und1_mobile/screens/inicial_page.dart';
 import 'package:und1_mobile/screens/login_page.dart';
-import 'package:und1_mobile/screens/settings_page.dart';
+import 'package:und1_mobile/screens/perfil_page.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
+import 'models/foto_provider.dart';
 import 'screens/cadastro_page.dart';
 
 Future<void> main() async {
@@ -22,6 +23,7 @@ Future<void> main() async {
       appId: "1:154519222523:android:3a02843425fe4444b9185e",
       messagingSenderId: "154519222523",
       projectId: "proj-mobile-filmes",
+      storageBucket: "gs://proj-mobile-filmes.appspot.com",
     ),
   );
 
@@ -38,29 +40,33 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
           create: (context) => ListaAvaliacoes(),
         ),
-    ],
-    child: MaterialApp(
-      theme: ThemeData(
-        fontFamily: GoogleFonts.poppins().fontFamily,
-      ).copyWith(
-        colorScheme: lightColorScheme,
+        ChangeNotifierProvider<FotoProvider>(
+          create: (context) => FotoProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          fontFamily: GoogleFonts.poppins().fontFamily,
+        ).copyWith(
+          colorScheme: lightColorScheme,
+        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRoutes.LOGIN,
+        routes: {
+          AppRoutes.HOME: (context) => const PaginaInicial(),
+          AppRoutes.DETALHES_FILME: (context) => const DetalhesFilmePage(),
+          AppRoutes.DETALHES_SERIE: (context) => const DetalhesSerie(),
+          AppRoutes.LOGIN: (context) => const LoginPage(),
+          AppRoutes.CADASTRO: (context) => const CadastroPage(),
+          AppRoutes.AVALIAR: (context) => const Avaliar(),
+          AppRoutes.PERFIL: (context) => const PerfilPage(),
+        },
       ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.LOGIN,
-      routes: {
-        AppRoutes.HOME: (context) => const PaginaInicial(),
-        AppRoutes.DETALHES_FILME: (context) => const DetalhesFilmePage(),
-        AppRoutes.DETALHES_SERIE: (context) => const DetalhesSerie(),
-        AppRoutes.LOGIN: (context) => const LoginPage(),
-        AppRoutes.CADASTRO: (context) => const CadastroPage(),
-        AppRoutes.AVALIAR:(context) => const Avaliar(),
-        AppRoutes.CONFIGURACOES: (context) => const SettingPage(),
-      },
-    ));
+    );
   }
 }
