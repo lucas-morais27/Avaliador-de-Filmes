@@ -154,16 +154,23 @@ class _LoginPageState extends State<LoginPage> {
                               return;
                             }
 
-                            final storage = FirebaseStorage.instance;
-                            await storage
-                                .ref('images/${Usuario.uid!}.jpg')
-                                .getDownloadURL()
-                                .then((value) {
-                              Provider.of<FotoProvider>(
-                                context,
-                                listen: false,
-                              ).fotoUrl = value;
-                            });
+                            try {
+                              final storage = FirebaseStorage.instance;
+                              await storage
+                                  .ref('images/${Usuario.uid!}.jpg')
+                                  .getDownloadURL()
+                                  .then((value) {
+                                Provider.of<FotoProvider>(
+                                  context,
+                                  listen: false,
+                                ).fotoUrl = value;
+                              });
+                            } catch (error) {
+                              if (error is FirebaseException &&
+                                  error.code == 'object-not-found') {
+                                debugPrint('Foto não encontrada');
+                              }
+                            }
 
                             // Passei o usuário pra frente, vai que precisa em outro lugar
                             Map<String, List<dynamic>> listas =
