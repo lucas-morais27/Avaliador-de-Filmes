@@ -10,6 +10,7 @@ class Usuario {
   String senha;
 
   static String? uid;
+
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
 
@@ -19,6 +20,7 @@ class Usuario {
     final FirebaseAuth auth = FirebaseAuth.instance;
 
     await auth.signOut();
+
     uid = null;
   }
 
@@ -91,6 +93,7 @@ class Usuario {
 
       Usuario usuario = Usuario(email: userEmail, senha: senha);
       Usuario.uid = userId;
+
       return usuario;
     } else {
       return null;

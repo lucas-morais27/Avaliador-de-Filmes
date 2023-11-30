@@ -2,13 +2,17 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:und1_mobile/components/modal_confirmacao.dart';
+import 'package:und1_mobile/models/foto_provider.dart';
 import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
-class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
+import '../components/modal_escolher_foto.dart';
+
+class PerfilPage extends StatelessWidget {
+  const PerfilPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,14 +81,21 @@ class SettingPage extends StatelessWidget {
             child: Column(
               children: [
                 ElevatedButton(
-                  onPressed: () => {logOut()},
+                  onPressed: () => {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const ModalEscolherFoto();
+                      },
+                    )
+                  },
                   style: buttonStyle,
                   child: const Row(
                     children: [
-                      Icon(Icons.exit_to_app),
+                      Icon(Icons.camera),
                       Text(
-                        'Sair',
-                      )
+                        'Alterar foto',
+                      ),
                     ],
                   ),
                 ),
@@ -115,6 +126,25 @@ class SettingPage extends StatelessWidget {
                       Text(
                         'Excluir conta',
                       ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () => {
+                    Provider.of<FotoProvider>(context, listen: false).fotoUrl =
+                        null,
+                    logOut(),
+                  },
+                  style: buttonStyle,
+                  child: const Row(
+                    children: [
+                      Icon(Icons.exit_to_app),
+                      Text(
+                        'Sair',
+                      )
                     ],
                   ),
                 ),
