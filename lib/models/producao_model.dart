@@ -11,13 +11,19 @@ class ProducaoModel extends ChangeNotifier {
 
   int _cardAtual = 0;
 
-  ProducaoModel(Map<String, List<dynamic>> listas) {
-    /*var listaPadrao = [];
-    listaPadrao.addAll(FILMES);
-    listaPadrao.addAll(SERIES);
-    listaPadrao.shuffle();*/
+  List<dynamic> get curtidos => _curtidos;
+  List<dynamic> get naoCurtidos => _naoCurtidos;
+  List<dynamic> get naoAvaliados => _naoAvaliados;
+  int get cardAtual => _cardAtual;
+  dynamic get producaoAtual => naoAvaliados[cardAtual];
 
-    //print(listas);
+  set naoAvaliados(List<dynamic> naoAvaliados) => _naoAvaliados = naoAvaliados;
+  set curtidos(List<dynamic> curtidos) => _curtidos = curtidos;
+  set naoCurtidos(List<dynamic> naoCurtidos) => _naoCurtidos = naoCurtidos;
+
+  carregarListas() async {
+    Map<String, List<dynamic>> listas =
+    await Usuario.carregarListas();
 
     listas['naoAvaliados'] != null
         ? _naoAvaliados = listas['naoAvaliados']!
@@ -31,16 +37,6 @@ class ProducaoModel extends ChangeNotifier {
         ? _curtidos = listas['curtidos']!
         : _curtidos = [];
   }
-
-  List<dynamic> get curtidos => _curtidos;
-  List<dynamic> get naoCurtidos => _naoCurtidos;
-  List<dynamic> get naoAvaliados => _naoAvaliados;
-  int get cardAtual => _cardAtual;
-  dynamic get producaoAtual => naoAvaliados[cardAtual];
-
-  set naoAvaliados(List<dynamic> naoAvaliados) => _naoAvaliados = naoAvaliados;
-  set curtidos(List<dynamic> curtidos) => _curtidos = curtidos;
-  set naoCurtidos(List<dynamic> naoCurtidos) => _naoCurtidos = naoCurtidos;
 
   proximoCard() {
     if (_cardAtual + 1 == _naoAvaliados.length) {

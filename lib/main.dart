@@ -13,6 +13,7 @@ import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
 import 'models/foto_provider.dart';
+import 'models/producao_model.dart';
 import 'screens/cadastro_page.dart';
 
 Future<void> main() async {
@@ -47,6 +48,9 @@ class _MainAppState extends State<MainApp> {
         ),
         ChangeNotifierProvider<FotoProvider>(
           create: (context) => FotoProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProducaoModel(),
         ),
       ],
       child: MaterialApp(

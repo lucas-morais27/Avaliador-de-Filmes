@@ -54,8 +54,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     var cores = Theme.of(context).colorScheme;
 
-    var listaAvaliacoes = context.watch<ListaAvaliacoes>();
-    //var producoes = Provider.of(context).watch<ProducaoModel>();
     ButtonStyle buttonStyle = ButtonStyle(
       padding: const MaterialStatePropertyAll<EdgeInsets>(EdgeInsets.all(12)),
       shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
@@ -154,36 +152,9 @@ class _LoginPageState extends State<LoginPage> {
                               return;
                             }
 
-                            try {
-                              final storage = FirebaseStorage.instance;
-                              await storage
-                                  .ref('images/${Usuario.uid!}.jpg')
-                                  .getDownloadURL()
-                                  .then((value) {
-                                Provider.of<FotoProvider>(
-                                  context,
-                                  listen: false,
-                                ).fotoUrl = value;
-                              });
-                            } catch (error) {
-                              if (error is FirebaseException &&
-                                  error.code == 'object-not-found') {
-                                debugPrint('Foto não encontrada');
-                              }
-                            }
-
-                            // Passei o usuário pra frente, vai que precisa em outro lugar
-                            Map<String, List<dynamic>> listas =
-                                await Usuario.carregarListas();
-                            List<Avaliacao> avaliacoes =
-                                await Avaliacao.carregarAvaliacoes();
-                            listaAvaliacoes.avaliacoes = avaliacoes;
-                            Map<String, dynamic> argument = {'listas': listas};
-
                             if (context.mounted) {
                               Navigator.of(context).pushReplacementNamed(
-                                AppRoutes.HOME,
-                                arguments: argument,
+                                AppRoutes.HOME
                               );
                             }
                           }

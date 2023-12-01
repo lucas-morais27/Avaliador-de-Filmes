@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:und1_mobile/models/foto_provider.dart';
+import 'package:und1_mobile/models/producao_model.dart';
 import 'package:und1_mobile/screens/filmes_nao_avaliados_page.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
@@ -87,9 +88,7 @@ class _MenuNavegacaoState extends State<MenuNavegacao> {
           ),
         ],
       ),
-      body: Container(
-        child: _screens.elementAt(_selectedIndex),
-      ),
+      body: _screens.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
