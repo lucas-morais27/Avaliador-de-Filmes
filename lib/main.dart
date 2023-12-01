@@ -9,6 +9,7 @@ import 'package:und1_mobile/screens/detalhes_serie_page.dart';
 import 'package:und1_mobile/screens/inicial_page.dart';
 import 'package:und1_mobile/screens/login_page.dart';
 import 'package:und1_mobile/screens/perfil_page.dart';
+import 'package:und1_mobile/screens/splash_page.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 
@@ -60,8 +61,9 @@ class _MainAppState extends State<MainApp> {
           colorScheme: lightColorScheme,
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.LOGIN,
+        initialRoute: AppRoutes.SPLASH,
         routes: {
+          AppRoutes.SPLASH: (context) => const SplashScreen(),
           AppRoutes.HOME: (context) => const PaginaInicial(),
           AppRoutes.DETALHES_FILME: (context) => const DetalhesFilmePage(),
           AppRoutes.DETALHES_SERIE: (context) => const DetalhesSerie(),

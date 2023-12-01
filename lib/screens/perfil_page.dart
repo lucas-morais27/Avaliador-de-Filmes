@@ -8,6 +8,7 @@ import 'package:und1_mobile/models/foto_provider.dart';
 import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
+import 'package:und1_mobile/utils/shared_preferences.dart';
 
 import '../components/modal_escolher_foto.dart';
 
@@ -21,6 +22,7 @@ class PerfilPage extends StatelessWidget {
 
     logOut() async {
       await Usuario.signOut();
+      AppSettings.logout();
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRoutes.LOGIN,

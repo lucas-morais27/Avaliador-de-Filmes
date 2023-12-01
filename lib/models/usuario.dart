@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:und1_mobile/mocks/mock_filme.dart';
+import 'package:und1_mobile/utils/shared_preferences.dart';
 
 import '../mocks/mock_serie.dart';
 
@@ -84,6 +85,7 @@ class Usuario {
       password: senha,
     );
 
+    AppSettings.save(usuario);
     User? user = userCredential.user;
 
     if (user != null) {
@@ -93,7 +95,6 @@ class Usuario {
 
       Usuario usuario = Usuario(email: userEmail, senha: senha);
       Usuario.uid = userId;
-
       return usuario;
     } else {
       return null;

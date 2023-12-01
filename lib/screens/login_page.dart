@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:und1_mobile/models/lista_avaliacoes.dart';
 import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
-
+import 'package:und1_mobile/utils/shared_preferences.dart';
 import '../models/avaliacao_model.dart';
 import '../models/foto_provider.dart';
 import '../styles.dart';
@@ -153,9 +153,8 @@ class _LoginPageState extends State<LoginPage> {
                             }
 
                             if (context.mounted) {
-                              Navigator.of(context).pushReplacementNamed(
-                                AppRoutes.HOME
-                              );
+                              Navigator.of(context)
+                                  .pushReplacementNamed(AppRoutes.HOME);
                             }
                           }
                         } catch (e) {
