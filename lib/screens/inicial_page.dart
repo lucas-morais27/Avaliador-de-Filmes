@@ -2,8 +2,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:und1_mobile/models/producao_model.dart';
 import 'package:und1_mobile/screens/menu_navegacao_page.dart';
+import 'package:und1_mobile/utils/shared_preferences.dart';
 
 import '../models/avaliacao_model.dart';
 import '../models/foto_provider.dart';
@@ -14,7 +16,8 @@ class PaginaInicial extends StatelessWidget {
   const PaginaInicial({super.key});
 
   carregarDados(BuildContext context) async {
-    await Provider.of<ProducaoModel>(context, listen: false).carregarListas();
+    Usuario.uid ??= await AppSettings.getUserId();
+    if(context.mounted) await Provider.of<ProducaoModel>(context, listen: false).carregarListas();
     List<Avaliacao> avaliacoes = await Avaliacao.carregarAvaliacoes();
     if(context.mounted) Provider.of<ListaAvaliacoes>(context, listen: false).avaliacoes = avaliacoes;
     try {

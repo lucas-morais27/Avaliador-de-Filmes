@@ -85,7 +85,6 @@ class Usuario {
       password: senha,
     );
 
-    AppSettings.save(usuario);
     User? user = userCredential.user;
 
     if (user != null) {
@@ -95,6 +94,7 @@ class Usuario {
 
       Usuario usuario = Usuario(email: userEmail, senha: senha);
       Usuario.uid = userId;
+      AppSettings.save(userId);
       return usuario;
     } else {
       return null;

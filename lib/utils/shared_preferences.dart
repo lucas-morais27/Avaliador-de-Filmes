@@ -30,6 +30,18 @@ class AppSettings extends ChangeNotifier {
     return false;
   }
 
+  static Future<String?> getUserId() async {
+    var prefs = await SharedPreferences.getInstance();
+    var jsonResult = prefs.getString(_key);
+
+    if (jsonResult != null) {
+      var mapUser = jsonDecode(jsonResult);
+
+      return mapUser['user'];
+    }
+    return null;
+  }
+
   static logout() async {
     var prefs = await SharedPreferences.getInstance();
     await prefs.remove(_key);
