@@ -49,7 +49,7 @@ class _MenuNavegacaoState extends State<MenuNavegacao> {
 
   @override
   Widget build(BuildContext context) {
-    String? fotoUrl = Provider.of<FotoProvider>(context).fotoUrl;
+    String? fotoUrl = context.watch<FotoProvider>().fotoUrl;
     final ColorScheme cores = Theme.of(context).colorScheme;
 
     return Scaffold(

@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:und1_mobile/models/lista_avaliacoes.dart';
@@ -18,7 +19,8 @@ import 'models/producao_model.dart';
 import 'screens/cadastro_page.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: "AIzaSyCMKnYQV4lh0LL6v4HWUsA3kgTWsod_zic",
@@ -28,7 +30,6 @@ Future<void> main() async {
       storageBucket: "gs://proj-mobile-filmes.appspot.com",
     ),
   );
-
   runApp(const MainApp());
 }
 
@@ -40,6 +41,12 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -61,7 +68,7 @@ class _MainAppState extends State<MainApp> {
           colorScheme: lightColorScheme,
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.SPLASH,
+        initialRoute: AppRoutes.LOGIN,
         routes: {
           AppRoutes.SPLASH: (context) => const SplashScreen(),
           AppRoutes.HOME: (context) => const PaginaInicial(),

@@ -1,5 +1,6 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:und1_mobile/models/lista_avaliacoes.dart';
 import 'package:und1_mobile/models/usuario.dart';
@@ -41,6 +42,19 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 2));
+    Future.wait([
+      AppSettings.isAuth(),
+    ]).then((value) => value[0]
+        ? Navigator.of(context).pushReplacementNamed(AppRoutes.HOME)
+        : '');
+
+    FlutterNativeSplash.remove();
   }
 
   @override

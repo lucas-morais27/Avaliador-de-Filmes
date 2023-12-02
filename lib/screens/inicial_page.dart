@@ -41,11 +41,24 @@ class PaginaInicial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    var cores = Theme.of(context).colorScheme;
     return FutureBuilder(
       future: carregarDados(context),
       builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting
-          ? const Center(child: CircularProgressIndicator())
+          ? Container(
+        color: cores.secondaryContainer,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/clapper.png",
+              height: 150,
+            ),
+            const SizedBox(height: 32,),
+            const CircularProgressIndicator()
+          ],
+        ),
+      )
           :  const MenuNavegacao(),
     );
   }
