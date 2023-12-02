@@ -8,6 +8,13 @@ import '../models/serie.dart';
 class DetalhesSerie extends StatelessWidget {
   const DetalhesSerie({super.key});
 
+  Future<Map<String, String>> carregarComentario(String id) async {
+    Map<String, String> data = {};
+    data['avatar'] = await Usuario.imagemDePerfilUsuario();
+    data['email'] = await Usuario.emailDoUsuario(id);
+    return data;
+  }
+
   @override
   Widget build(BuildContext context) {
     var serie = ModalRoute.of(context)?.settings.arguments as Serie;
@@ -206,45 +213,71 @@ class DetalhesSerie extends StatelessWidget {
                             );
                           }
                         },
-                        child: Row(
-                          children: [
-                            FutureBuilder(
-                              future: Usuario.emailDoUsuario(avaliacao.userid),
-                              builder:
-                                  (context, AsyncSnapshot<String> snapshot) {
-                                if (snapshot.hasData) {
-                                  return Text(
-                                    '${snapshot.data}:',
-                                    style: TextStyle(
-                                      color: cores.onSecondary,
-                                      fontWeight: FontWeight.bold,
+                        child: FutureBuilder(
+                          future: carregarComentario(avaliacao.userid),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Row(
+                                children: [
+                                  snapshot.data!['avatar'] != null
+                                      ? Container(
+                                          width: 40.0,
+                                          height: 40.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                  snapshot.data!['avatar']!),
+                                            ),
+                                          ),
+                                        )
+                                      : const Icon(
+                                          Icons.person,
+                                          size: 32.0,
+                                        ),
+                                  const SizedBox(width: 8,),
+                                  Expanded(child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          '${snapshot.data!['email']}:',
+                                          style: TextStyle(
+                                            color: cores.onSecondary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Row(
+                                          children: List.generate(
+                                            5,
+                                                (starIndex) => Icon(
+                                              Icons.star,
+                                              color: starIndex <
+                                                  double.parse(avaliacao.nota)
+                                                  ? Colors.orange
+                                                  : Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                } else {
-                                  return const CircularProgressIndicator();
-                                }
-                              },
-                            ),
-                            const SizedBox(width: 8),
-                            Row(
-                              children: List.generate(
-                                5,
-                                (starIndex) => Icon(
-                                  Icons.star,
-                                  color:
-                                      starIndex < double.parse(avaliacao.nota)
-                                          ? Colors.orange
-                                          : Colors.grey,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        avaliacao.comentario ?? "",
-                        style: TextStyle(
-                          color: cores.onSecondary,
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      avaliacao.comentario ?? "",
+                                      style: TextStyle(
+                                        color: cores.onSecondary,
+                                      ),
+                                    ),
+                                  ])),
+                                ],
+                              );
+                            } else {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                          },
                         ),
                       ),
                       const SizedBox(

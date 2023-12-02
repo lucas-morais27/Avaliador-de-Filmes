@@ -60,10 +60,10 @@ class PerfilPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: cores.secondary,
       appBar: AppBar(
-        title: const Center(
+        title: const Expanded(
           child: Text(
-            "Configurações",
-            style: estiloTitulo3,
+            "Perfil",
+            style: estiloSubTitulo1,
           ),
         ),
         leading: GestureDetector(
