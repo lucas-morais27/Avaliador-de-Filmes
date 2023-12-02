@@ -15,10 +15,13 @@ import 'package:und1_mobile/screens/splash_page.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 import 'package:und1_mobile/utils/local_auth_service.dart';
+import 'package:und1_mobile/utils/notification_service.dart';
 
 import 'models/foto_provider.dart';
 import 'models/producao_model.dart';
 import 'screens/cadastro_page.dart';
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +35,7 @@ Future<void> main() async {
       storageBucket: "gs://proj-mobile-filmes.appspot.com",
     ),
   );
+  await NotificationService().initNotifications();
   runApp(const MainApp());
 }
 
@@ -72,6 +76,7 @@ class _MainAppState extends State<MainApp> {
         ),
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.LOGIN,
+        navigatorKey: navigatorKey,
         routes: {
           AppRoutes.SPLASH: (context) => const SplashScreen(),
           AppRoutes.HOME: (context) => const PaginaInicial(),
