@@ -49,10 +49,11 @@ class _MenuNavegacaoState extends State<MenuNavegacao> {
 
   @override
   Widget build(BuildContext context) {
-    String? fotoUrl = context.watch<FotoProvider>().fotoUrl;
+    var fotoProvider = context.watch<FotoProvider>();
     final ColorScheme cores = Theme.of(context).colorScheme;
 
     return Scaffold(
+      key: UniqueKey(),
       backgroundColor: cores.secondary,
       appBar: AppBar(
         title: Center(
@@ -68,7 +69,7 @@ class _MenuNavegacaoState extends State<MenuNavegacao> {
               onTap: () {
                 Navigator.of(context).pushNamed(AppRoutes.PERFIL);
               },
-              child: fotoUrl != null
+              child: fotoProvider.fotoUrl != null
                   ? Container(
                       width: 40.0,
                       height: 40.0,
@@ -76,7 +77,7 @@ class _MenuNavegacaoState extends State<MenuNavegacao> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage(fotoUrl),
+                          image: NetworkImage(fotoProvider.fotoUrl!),
                         ),
                       ),
                     )

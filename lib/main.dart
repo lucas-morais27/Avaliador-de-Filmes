@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:und1_mobile/models/lista_avaliacoes.dart';
 import 'package:und1_mobile/screens/avaliar_page.dart';
@@ -13,6 +14,7 @@ import 'package:und1_mobile/screens/perfil_page.dart';
 import 'package:und1_mobile/screens/splash_page.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
+import 'package:und1_mobile/utils/local_auth_service.dart';
 
 import 'models/foto_provider.dart';
 import 'models/producao_model.dart';
@@ -60,6 +62,7 @@ class _MainAppState extends State<MainApp> {
         ChangeNotifierProvider(
           create: (context) => ProducaoModel(),
         ),
+        ChangeNotifierProvider(create: (context) => LocalAuthService(auth: LocalAuthentication()))
       ],
       child: MaterialApp(
         theme: ThemeData(

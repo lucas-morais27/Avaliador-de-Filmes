@@ -21,6 +21,7 @@ dependencies:
   firebase_storage: ^11.5.3
   shared_preferences: ^2.2.2
   flutter_native_splash: ^2.3.6
+  local_auth: ^2.1.7
 
 dev_dependencies:
   flutter_test:

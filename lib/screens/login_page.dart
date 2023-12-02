@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:und1_mobile/models/lista_avaliacoes.dart';
 import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
+import 'package:und1_mobile/utils/local_auth_service.dart';
 import 'package:und1_mobile/utils/shared_preferences.dart';
 import '../models/avaliacao_model.dart';
 import '../models/foto_provider.dart';
@@ -21,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usuarioController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
   var _senhaVisivel = false;
+  var _authFalhou = false;
 
   Future<void> _showLoginErrorDialog(BuildContext context) async {
     return showDialog(
@@ -44,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+
   @override
   void initState() {
     super.initState();
@@ -51,10 +54,28 @@ class _LoginPageState extends State<LoginPage> {
     Future.wait([
       AppSettings.isAuth(),
     ]).then((value) => value[0]
-        ? Navigator.of(context).pushReplacementNamed(AppRoutes.HOME)
+        ? verificarLocalAuth()
         : '');
 
     FlutterNativeSplash.remove();
+  }
+
+
+  verificarLocalAuth() async{
+    final auth = context.read<LocalAuthService>();
+    final localAuthEstaDisponivel  = await auth.biometriaEstaDisponivel();
+
+    if(localAuthEstaDisponivel){
+      final autenticado = await auth.autenticar();
+      if(!autenticado){
+        setState(() {
+          _authFalhou = true;
+        });
+      } else {
+        if(!mounted) return;
+        Navigator.of(context).pushReplacementNamed(AppRoutes.HOME);
+      }
+    }
   }
 
   @override
@@ -153,6 +174,27 @@ class _LoginPageState extends State<LoginPage> {
                       child: SizedBox(
                     height: 16,
                   )),
+                  if(_authFalhou)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            verificarLocalAuth();
+                          },
+                          style: buttonStyle,
+                          child: const Text(
+                            'Autenticar novamente',
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                      ],
+                    ),
                   ElevatedButton(
                       onPressed: () async {
                         String email = _usuarioController.text;
