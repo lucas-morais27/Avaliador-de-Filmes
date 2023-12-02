@@ -8,9 +8,9 @@ import '../models/serie.dart';
 class DetalhesSerie extends StatelessWidget {
   const DetalhesSerie({super.key});
 
-  Future<Map<String, String>> carregarComentario(String id) async {
-    Map<String, String> data = {};
-    data['avatar'] = await Usuario.imagemDePerfilUsuario();
+  Future<Map<String, String?>> carregarComentario(String id) async {
+    Map<String, String?> data = {};
+    data['avatar'] = await Usuario.imagemDePerfilUsuario(id);
     data['email'] = await Usuario.emailDoUsuario(id);
     return data;
   }
@@ -219,7 +219,7 @@ class DetalhesSerie extends StatelessWidget {
                             if (snapshot.hasData) {
                               return Row(
                                 children: [
-                                  snapshot.data!['avatar'] != null
+                                  snapshot.data!['avatar'] != ''
                                       ? Container(
                                           width: 40.0,
                                           height: 40.0,
@@ -235,6 +235,7 @@ class DetalhesSerie extends StatelessWidget {
                                       : const Icon(
                                           Icons.person,
                                           size: 32.0,
+                                          color: Colors.white,
                                         ),
                                   const SizedBox(width: 8,),
                                   Expanded(child: Column(

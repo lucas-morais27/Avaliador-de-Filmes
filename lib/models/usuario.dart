@@ -209,10 +209,14 @@ class Usuario {
     return data?['email'];
   }
 
-  static Future<String> imagemDePerfilUsuario() async {
+  static Future<String> imagemDePerfilUsuario(String id) async {
     var db = FirebaseStorage.instance;
-    String ref = "images/${Usuario.uid}.jpg";
-    String url = await db.ref(ref).getDownloadURL();
-    return url;
+    String ref = "images/$id.jpg";
+    try {
+      var url = await db.ref(ref).getDownloadURL();
+      return url;
+    } catch (e) {
+      return '';
+    }
   }
 }

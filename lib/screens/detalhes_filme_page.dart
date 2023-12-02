@@ -11,7 +11,7 @@ class DetalhesFilmePage extends StatelessWidget {
 
   Future<Map<String, String>> carregarComentario(String id) async {
     Map<String, String> data = {};
-    data['avatar'] = await Usuario.imagemDePerfilUsuario();
+    data['avatar'] = await Usuario.imagemDePerfilUsuario(id);
     data['email'] = await Usuario.emailDoUsuario(id);
     return data;
   }
@@ -186,7 +186,7 @@ class DetalhesFilmePage extends StatelessWidget {
                             if (snapshot.hasData) {
                               return Row(
                                 children: [
-                                  snapshot.data!['avatar'] != null
+                                  snapshot.data!['avatar'] != ''
                                       ? Container(
                                     width: 40.0,
                                     height: 40.0,
@@ -202,6 +202,7 @@ class DetalhesFilmePage extends StatelessWidget {
                                       : const Icon(
                                     Icons.person,
                                     size: 32.0,
+                                    color: Colors.white,
                                   ),
                                   const SizedBox(width: 8,),
                                   Expanded(child: Column(
