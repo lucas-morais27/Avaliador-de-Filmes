@@ -21,6 +21,7 @@ class NotificationService {
   Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
     await FirebaseMessaging.instance.subscribeToTopic("producoes");
+    await FirebaseMessaging.instance.subscribeToTopic("filmes");
 
 
     final messagingToken = await _firebaseMessaging.getToken();
