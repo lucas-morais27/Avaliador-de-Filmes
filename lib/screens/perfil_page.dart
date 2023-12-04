@@ -32,6 +32,7 @@ class PerfilPage extends StatelessWidget {
 
     deletarConta() async {
       await Usuario.deleteAccount();
+      await AppSettings.logout();
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRoutes.LOGIN,

@@ -208,8 +208,6 @@ class DetalhesFilmePage extends StatelessWidget {
                                   Expanded(child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
-                                        Row(
-                                          children: [
                                             Text(
                                               '${snapshot.data!['email']}:',
                                               style: TextStyle(
@@ -217,19 +215,17 @@ class DetalhesFilmePage extends StatelessWidget {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            Row(
-                                              children: List.generate(
-                                                5,
-                                                    (starIndex) => Icon(
-                                                  Icons.star,
-                                                  color: starIndex <
-                                                      double.parse(avaliacao.nota)
-                                                      ? Colors.orange
-                                                      : Colors.grey,
-                                                ),
-                                              ),
+                                        Row(
+                                          children: List.generate(
+                                            5,
+                                                (starIndex) => Icon(
+                                              Icons.star,
+                                              color: starIndex <
+                                                  double.parse(avaliacao.nota)
+                                                  ? Colors.orange
+                                                  : Colors.grey,
                                             ),
-                                          ],
+                                          ),
                                         ),
                                         const SizedBox(width: 8),
                                         Text(

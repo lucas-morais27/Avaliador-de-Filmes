@@ -241,15 +241,14 @@ class DetalhesSerie extends StatelessWidget {
                                   Expanded(child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
-                                    Row(
-                                      children: [
-                                        Text(
+                                    Text(
                                           '${snapshot.data!['email']}:',
                                           style: TextStyle(
                                             color: cores.onSecondary,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
+
                                         Row(
                                           children: List.generate(
                                             5,
@@ -262,8 +261,6 @@ class DetalhesSerie extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
                                     const SizedBox(width: 8),
                                     Text(
                                       avaliacao.comentario ?? "",
