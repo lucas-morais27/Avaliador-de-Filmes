@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth/local_auth.dart';
@@ -11,7 +12,6 @@ import 'package:und1_mobile/screens/detalhes_serie_page.dart';
 import 'package:und1_mobile/screens/inicial_page.dart';
 import 'package:und1_mobile/screens/login_page.dart';
 import 'package:und1_mobile/screens/perfil_page.dart';
-import 'package:und1_mobile/screens/splash_page.dart';
 import 'package:und1_mobile/styles.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 import 'package:und1_mobile/utils/local_auth_service.dart';
@@ -25,6 +25,8 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp]);
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(
     options: const FirebaseOptions(
@@ -78,7 +80,6 @@ class _MainAppState extends State<MainApp> {
         initialRoute: AppRoutes.LOGIN,
         navigatorKey: navigatorKey,
         routes: {
-          AppRoutes.SPLASH: (context) => const SplashScreen(),
           AppRoutes.HOME: (context) => const PaginaInicial(),
           AppRoutes.DETALHES_FILME: (context) => const DetalhesFilmePage(),
           AppRoutes.DETALHES_SERIE: (context) => const DetalhesSerie(),

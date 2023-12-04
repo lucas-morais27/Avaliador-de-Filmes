@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:und1_mobile/mocks/mock_filme.dart';
+import 'package:und1_mobile/utils/movie_db_service.dart';
 import 'package:und1_mobile/utils/shared_preferences.dart';
 
 import '../mocks/mock_serie.dart';
@@ -53,14 +54,10 @@ class Usuario {
       await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: senha)
           .then((result) {
-        List<dynamic> producoesIniciais = [];
-        producoesIniciais.addAll(FILMES);
-        producoesIniciais.addAll(SERIES);
-        producoesIniciais.shuffle();
         uid = result.user?.uid;
         _db.collection('users').doc(uid).set({
           "email": email,
-          "naoAvaliados": producoesIniciais.map((p) => p.id),
+          "naoAvaliados": [],
           "naoCurtidos": [],
           "curtidos": []
         });
@@ -173,22 +170,40 @@ class Usuario {
           data = doc.data() as Map<String, dynamic>;
         },
       );
-      List<dynamic> producoes = [];
-      producoes.addAll(SERIES);
-      producoes.addAll(FILMES);
       var producoesNaoAvaliadas = data?['naoAvaliados'];
       var producoesNaoCurtidas = data?['naoCurtidos'];
       var producoesCurtidas = data?['curtidos'];
+
+      var naoAvaliadas = [];
+      var naoCurtidas = [];
+      var curtidos = [];
+
+      producoesNaoAvaliadas.forEach((p) async {
+        var prod = await MovieDBService.getProducao(p);
+        if(prod != null){
+          naoAvaliadas.add(prod);
+        }
+      });
+
+      producoesNaoCurtidas.forEach((p) async {
+        var prod = await MovieDBService.getProducao(p);
+        if(prod != null){
+          naoCurtidas.add(prod);
+        }
+      });
+
+      producoesCurtidas.forEach((p) async {
+        var prod = await MovieDBService.getProducao(p);
+        if(prod != null){
+          curtidos.add(prod);
+        }
+      });
+
+
       return {
-        'naoAvaliados': producoes
-            .where((element) => producoesNaoAvaliadas.contains(element.id))
-            .toList(),
-        'naoCurtidos': producoes
-            .where((element) => producoesNaoCurtidas.contains(element.id))
-            .toList(),
-        'curtidos': producoes
-            .where((element) => producoesCurtidas.contains(element.id))
-            .toList(),
+        'naoAvaliados': naoAvaliadas,
+        'naoCurtidos': naoCurtidas,
+        'curtidos': curtidos,
       };
     }
     return {
@@ -209,10 +224,14 @@ class Usuario {
     return data?['email'];
   }
 
-  static Future<String> imagemDePerfilUsuario() async {
+  static Future<String> imagemDePerfilUsuario(String id) async {
     var db = FirebaseStorage.instance;
-    String ref = "images/${Usuario.uid}.jpg";
-    String url = await db.ref(ref).getDownloadURL();
-    return url;
+    String ref = "images/$id.jpg";
+    try {
+      var url = await db.ref(ref).getDownloadURL();
+      return url;
+    } catch (e) {
+      return '';
+    }
   }
 }

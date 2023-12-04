@@ -59,7 +59,7 @@ class _MenuNavegacaoState extends State<MenuNavegacao> {
         title: Center(
           child: Text(
             _titulosDaPagina[_selectedIndex],
-            style: estiloTitulo3,
+            style: estiloSubTitulo1,
           ),
         ),
         actions: <Widget>[

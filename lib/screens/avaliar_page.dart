@@ -72,7 +72,7 @@ class _AvaliarState extends State<Avaliar> {
                         initialRating: _initialRating,
                         minRating: 0,
                         direction: Axis.horizontal,
-                        allowHalfRating: true,
+                        allowHalfRating: false,
                         itemCount: 5,
                         itemSize: 40.0,
                         itemPadding:

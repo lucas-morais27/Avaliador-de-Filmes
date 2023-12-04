@@ -8,5 +8,4 @@ class AppRoutes {
   static const CADASTRO = '/cadastro';
   static const AVALIAR = '/avaliar';
   static const PERFIL = '/perfil';
-  static const SPLASH = '/splash';
 }

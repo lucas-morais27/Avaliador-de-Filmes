@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:und1_mobile/models/usuario.dart';
+import 'package:und1_mobile/utils/movie_db_service.dart';
 
 class ProducaoModel extends ChangeNotifier {
   List<dynamic> _naoAvaliados = [];
@@ -10,6 +11,7 @@ class ProducaoModel extends ChangeNotifier {
   static final _db = FirebaseFirestore.instance;
 
   int _cardAtual = 0;
+  int _paginaAtual = 1;
 
   List<dynamic> get curtidos => _curtidos;
   List<dynamic> get naoCurtidos => _naoCurtidos;
@@ -46,6 +48,31 @@ class ProducaoModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  adicionarMaisProducoes() async {
+    var producoesAntigas = [];
+    producoesAntigas.addAll(_naoAvaliados);
+    producoesAntigas.addAll(_curtidos);
+    producoesAntigas.addAll(_naoCurtidos);
+    producoesAntigas = producoesAntigas.map((e) => e.id).toList();
+    var queryProducoes = await MovieDBService.adicionarMaisProducoes(_paginaAtual);
+    _paginaAtual++;
+    if(queryProducoes != null){
+      var novasProducoes = queryProducoes.where((element) => !producoesAntigas.contains(element)).toList();
+      for(var element in novasProducoes) {
+        var producao = await MovieDBService.getProducao(element);
+        if(producao != null){
+          naoAvaliados.add(producao);
+        }
+      }
+      if(novasProducoes.isEmpty){
+        adicionarMaisProducoes();
+      }
+    }
+    _atualizarListas();
+    notifyListeners();
+  }
+
 
   naoGostei() async {
     var index = _cardAtual;

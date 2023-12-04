@@ -60,11 +60,9 @@ class PerfilPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: cores.secondary,
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            "Configurações",
-            style: estiloTitulo3,
-          ),
+        title: const Text(
+            "Perfil",
+            style: estiloSubTitulo1,
         ),
         leading: GestureDetector(
           onTap: () => {Navigator.pop(context)},
