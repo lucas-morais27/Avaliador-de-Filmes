@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppSettings extends ChangeNotifier {
-  static final String _key = 'key';
+  static const String _key = 'key';
 
   static save(String user) async {
     var prefs = await SharedPreferences.getInstance();

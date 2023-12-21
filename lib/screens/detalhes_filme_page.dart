@@ -188,40 +188,45 @@ class DetalhesFilmePage extends StatelessWidget {
                                 children: [
                                   snapshot.data!['avatar'] != ''
                                       ? Container(
-                                    width: 40.0,
-                                    height: 40.0,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                            snapshot.data!['avatar']!),
-                                      ),
-                                    ),
-                                  )
-                                      : const Icon(
-                                    Icons.person,
-                                    size: 32.0,
-                                    color: Colors.white,
-                                  ),
-                                  const SizedBox(width: 8,),
-                                  Expanded(child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      children: [
-                                            Text(
-                                              '${snapshot.data!['email']}:',
-                                              style: TextStyle(
-                                                color: cores.onSecondary,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                          width: 40.0,
+                                          height: 40.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                  snapshot.data!['avatar']!),
                                             ),
+                                          ),
+                                        )
+                                      : const Icon(
+                                          Icons.person,
+                                          size: 32.0,
+                                          color: Colors.white,
+                                        ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Expanded(
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                        Text(
+                                          '${snapshot.data!['email']}:',
+                                          style: TextStyle(
+                                            color: cores.onSecondary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                         Row(
                                           children: List.generate(
                                             5,
-                                                (starIndex) => Icon(
+                                            (starIndex) => Icon(
                                               Icons.star,
                                               color: starIndex <
-                                                  double.parse(avaliacao.nota)
+                                                      double.parse(
+                                                          avaliacao.nota)
                                                   ? Colors.orange
                                                   : Colors.grey,
                                             ),

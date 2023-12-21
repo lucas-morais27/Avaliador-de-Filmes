@@ -13,7 +13,8 @@ class LocalAuthService extends ChangeNotifier {
 
   Future<bool> autenticar() async {
     return await auth.authenticate(
-      localizedReason: 'Por favor, autentique-se para continuar para o aplicativo.',
+      localizedReason:
+          'Por favor, autentique-se para continuar para o aplicativo.',
     );
   }
 }

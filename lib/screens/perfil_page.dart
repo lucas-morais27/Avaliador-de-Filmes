@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:und1_mobile/components/modal_confirmacao.dart';
@@ -18,7 +17,6 @@ class PerfilPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorScheme cores = Theme.of(context).colorScheme;
-    final FirebaseAuth auth = FirebaseAuth.instance;
 
     logOut() async {
       await Usuario.signOut();
@@ -62,8 +60,8 @@ class PerfilPage extends StatelessWidget {
       backgroundColor: cores.secondary,
       appBar: AppBar(
         title: const Text(
-            "Perfil",
-            style: estiloSubTitulo1,
+          "Perfil",
+          style: estiloSubTitulo1,
         ),
         leading: GestureDetector(
           onTap: () => {Navigator.pop(context)},

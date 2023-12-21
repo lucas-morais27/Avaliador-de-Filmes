@@ -1,14 +1,11 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
-import 'package:und1_mobile/models/lista_avaliacoes.dart';
 import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
 import 'package:und1_mobile/utils/local_auth_service.dart';
 import 'package:und1_mobile/utils/shared_preferences.dart';
-import '../models/avaliacao_model.dart';
-import '../models/foto_provider.dart';
+
 import '../styles.dart';
 
 class LoginPage extends StatefulWidget {
@@ -46,33 +43,29 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 2));
+    Future.delayed(const Duration(seconds: 2));
     Future.wait([
       AppSettings.isAuth(),
-    ]).then((value) => value[0]
-        ? verificarLocalAuth()
-        : '');
+    ]).then((value) => value[0] ? verificarLocalAuth() : '');
 
     FlutterNativeSplash.remove();
   }
 
-
-  verificarLocalAuth() async{
+  verificarLocalAuth() async {
     final auth = context.read<LocalAuthService>();
-    final localAuthEstaDisponivel  = await auth.biometriaEstaDisponivel();
+    final localAuthEstaDisponivel = await auth.biometriaEstaDisponivel();
 
-    if(localAuthEstaDisponivel){
+    if (localAuthEstaDisponivel) {
       final autenticado = await auth.autenticar();
-      if(!autenticado){
+      if (!autenticado) {
         setState(() {
           _authFalhou = true;
         });
       } else {
-        if(!mounted) return;
+        if (!mounted) return;
         Navigator.of(context).pushReplacementNamed(AppRoutes.HOME);
       }
     }
@@ -174,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: SizedBox(
                     height: 16,
                   )),
-                  if(_authFalhou)
+                  if (_authFalhou)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

@@ -12,9 +12,7 @@ class ListaAvaliacoes extends ChangeNotifier {
   set avaliacoes(List<Avaliacao> avaliacoes) => _avaliacoes = avaliacoes;
 
   carregarAvaliacoes() async {
-
-    List<Avaliacao> avaliacoes =
-    await Avaliacao.carregarAvaliacoes();
+    List<Avaliacao> avaliacoes = await Avaliacao.carregarAvaliacoes();
   }
 
   adicionar(Avaliacao avaliacao) {

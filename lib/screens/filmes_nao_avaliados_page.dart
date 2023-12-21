@@ -15,9 +15,7 @@ class PaginaFilmesNaoAvaliadosPage extends StatefulWidget {
 
 class _PaginaFilmesNaoAvaliadosPageState
     extends State<PaginaFilmesNaoAvaliadosPage> {
-
   var _estaEmespera = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,7 @@ class _PaginaFilmesNaoAvaliadosPageState
                 style: estiloSubTitulo2.copyWith(color: cores.onSecondary),
                 textAlign: TextAlign.center,
               ),
-              if(!_estaEmespera)
+              if (!_estaEmespera)
                 BotaoPadrao(
                     texto: 'Avaliar mais produções',
                     onPressed: () async {
@@ -48,8 +46,7 @@ class _PaginaFilmesNaoAvaliadosPageState
                       setState(() {
                         _estaEmespera = false;
                       });
-                    }
-                )
+                    })
               else
                 const CircularProgressIndicator()
             ],

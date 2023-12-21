@@ -24,8 +24,7 @@ class ProducaoModel extends ChangeNotifier {
   set naoCurtidos(List<dynamic> naoCurtidos) => _naoCurtidos = naoCurtidos;
 
   carregarListas() async {
-    Map<String, List<dynamic>> listas =
-    await Usuario.carregarListas();
+    Map<String, List<dynamic>> listas = await Usuario.carregarListas();
 
     listas['naoAvaliados'] != null
         ? _naoAvaliados = listas['naoAvaliados']!
@@ -55,24 +54,26 @@ class ProducaoModel extends ChangeNotifier {
     producoesAntigas.addAll(_curtidos);
     producoesAntigas.addAll(_naoCurtidos);
     producoesAntigas = producoesAntigas.map((e) => e.id).toList();
-    var queryProducoes = await MovieDBService.adicionarMaisProducoes(_paginaAtual);
+    var queryProducoes =
+        await MovieDBService.adicionarMaisProducoes(_paginaAtual);
     _paginaAtual++;
-    if(queryProducoes != null){
-      var novasProducoes = queryProducoes.where((element) => !producoesAntigas.contains(element)).toList();
-      for(var element in novasProducoes) {
+    if (queryProducoes != null) {
+      var novasProducoes = queryProducoes
+          .where((element) => !producoesAntigas.contains(element))
+          .toList();
+      for (var element in novasProducoes) {
         var producao = await MovieDBService.getProducao(element);
-        if(producao != null){
+        if (producao != null) {
           naoAvaliados.add(producao);
         }
       }
-      if(novasProducoes.isEmpty){
+      if (novasProducoes.isEmpty) {
         adicionarMaisProducoes();
       }
     }
     _atualizarListas();
     notifyListeners();
   }
-
 
   naoGostei() async {
     var index = _cardAtual;

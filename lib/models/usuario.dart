@@ -2,11 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:und1_mobile/mocks/mock_filme.dart';
 import 'package:und1_mobile/utils/movie_db_service.dart';
 import 'package:und1_mobile/utils/shared_preferences.dart';
-
-import '../mocks/mock_serie.dart';
 
 class Usuario {
   String email;
@@ -44,7 +41,6 @@ class Usuario {
     if (uid == null) {
       return await _cadastrarUsuario();
     } else {
-      //TODO _atualizarUsuario();
       return 'Não foi possível atualizar o usuário';
     }
   }
@@ -180,25 +176,24 @@ class Usuario {
 
       producoesNaoAvaliadas.forEach((p) async {
         var prod = await MovieDBService.getProducao(p);
-        if(prod != null){
+        if (prod != null) {
           naoAvaliadas.add(prod);
         }
       });
 
       producoesNaoCurtidas.forEach((p) async {
         var prod = await MovieDBService.getProducao(p);
-        if(prod != null){
+        if (prod != null) {
           naoCurtidas.add(prod);
         }
       });
 
       producoesCurtidas.forEach((p) async {
         var prod = await MovieDBService.getProducao(p);
-        if(prod != null){
+        if (prod != null) {
           curtidos.add(prod);
         }
       });
-
 
       return {
         'naoAvaliados': naoAvaliadas,

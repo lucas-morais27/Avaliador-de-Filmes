@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:und1_mobile/models/lista_avaliacoes.dart';
 import 'package:und1_mobile/models/usuario.dart';
 import 'package:und1_mobile/utils/app_routes.dart';
+
 import '../models/serie.dart';
 
 class DetalhesSerie extends StatelessWidget {
@@ -237,38 +238,42 @@ class DetalhesSerie extends StatelessWidget {
                                           size: 32.0,
                                           color: Colors.white,
                                         ),
-                                  const SizedBox(width: 8,),
-                                  Expanded(child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      children: [
-                                    Text(
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Expanded(
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                        Text(
                                           '${snapshot.data!['email']}:',
                                           style: TextStyle(
                                             color: cores.onSecondary,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-
                                         Row(
                                           children: List.generate(
                                             5,
-                                                (starIndex) => Icon(
+                                            (starIndex) => Icon(
                                               Icons.star,
                                               color: starIndex <
-                                                  double.parse(avaliacao.nota)
+                                                      double.parse(
+                                                          avaliacao.nota)
                                                   ? Colors.orange
                                                   : Colors.grey,
                                             ),
                                           ),
                                         ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      avaliacao.comentario ?? "",
-                                      style: TextStyle(
-                                        color: cores.onSecondary,
-                                      ),
-                                    ),
-                                  ])),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          avaliacao.comentario ?? "",
+                                          style: TextStyle(
+                                            color: cores.onSecondary,
+                                          ),
+                                        ),
+                                      ])),
                                 ],
                               );
                             } else {
