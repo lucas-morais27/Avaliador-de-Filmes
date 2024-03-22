@@ -1,4 +1,4 @@
-<h1 align="center">📱 Projeto Mobile DIM0524</h1>
+<h1 align="center">📱 Avaliador-de-Filmes</h1>
 
 <p align="center">
     <img src="https://img.shields.io/badge/Flutter-v3.16.5-blue">
